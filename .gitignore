@@ -1,0 +1,13 @@
+# Compiled output
+**/dist
+
+# Dependencies
+**/node_modules
+
+# Misc
+*.log
+*.env
+
+# System Files
+.DS_Store
+Thumbs.db
