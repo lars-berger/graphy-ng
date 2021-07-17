@@ -1,0 +1,39 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(245, 245, 245);
+  font-family: sans-serif;
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 20px;
+  background-color: white;
+  border: 1px solid rgb(210, 210, 210);
+  border-radius: 4px;
+  transition: border 0.2s ease;
+
+  &__title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &:hover,
+  &:focus {
+    cursor: pointer;
+    border: 1px solid blue;
+  }
+}
+
+.edge {
+  stroke: rgb(100, 100, 100);
+  stroke-width: 2;
+}
+
+.arrow {
+  fill: rgb(100, 100, 100);
+}

@@ -1,1 +1,34 @@
-<lib-graph [edges]="edges" [nodes]="nodes"></lib-graph>
+<div class="container">
+  <lib-graph [edges]="edges" [nodes]="nodes">
+    <ng-template #defsTemplate>
+      <svg:marker
+        class="arrow"
+        id="arrow"
+        viewBox="0 -5 10 10"
+        refX="8"
+        refY="0"
+        markerWidth="4"
+        markerHeight="4"
+        orient="auto"
+      >
+        <svg:path d="M0,-5L10,0L0,5" />
+      </svg:marker>
+    </ng-template>
+
+    <ng-template #nodeTemplate let-node>
+      <svg:g xmlns="http://www.w3.org/2000/xhtml" width="400" height="80">
+        <svg:foreignObject width="400" height="80">
+          <xhtml:div class="node" xmlns="http://www.w3.org/1999/xhtml">
+            <p class="node__title">{{ node.data.title }}</p>
+          </xhtml:div>
+        </svg:foreignObject>
+      </svg:g>
+    </ng-template>
+
+    <ng-template #edgeTemplate let-edge>
+      <svg:g class="edge">
+        <svg:path class="edge__line" marker-end="url(#arrow)" [attr.d]="edge.pathDefinition"></svg:path>
+      </svg:g>
+    </ng-template>
+  </lib-graph>
+</div>
