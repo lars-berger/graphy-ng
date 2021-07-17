@@ -6,5 +6,26 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'example';
+  nodes = [
+    {
+      id: '1',
+      data: {
+        title: 'Hello',
+      },
+    },
+    {
+      id: '2',
+      data: {
+        title: 'World',
+      },
+    },
+  ];
+
+  edges = [
+    {
+      id: '1',
+      sourceId: '1',
+      targetId: '2',
+    },
+  ];
 }
