@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig-base.json",
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "baseUrl": "./src",
+    "target": "es2015",
+    "module": "esnext",
+    "declaration": true,
+    "inlineSources": true,
+    "types": ["node"],
+    "lib": ["dom", "es2018"]
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": false,
+    "strictTemplates": true,
+    "enableResourceInlining": true,
+    "enableIvy": true
+  },
+  "exclude": ["src/test.ts", "**/*.spec.ts"]
+}
