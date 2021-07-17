@@ -1,0 +1,46 @@
+{
+  "name": "graphi-ng",
+  "version": "1.0.0",
+  "main": "dist/out-tsc/esm2015/public-api.js",
+  "typings": "dist/out-tsc/public-api.d.ts",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "ng-packagr -p ng-package.json --config ./tsconfig.json",
+    "watch": "ng-packagr -p ng-package.json --config ./tsconfig.json --watch true",
+    "start": "npm run clean && npm run watch"
+  },
+  "dependencies": {
+    "tslib": "2.3.0"
+  },
+  "peerDependencies": {
+    "@angular/animations": "12.1.2",
+    "@angular/cdk": "12.1.2",
+    "@angular/cli": "12.1.2",
+    "@angular/common": "12.1.2",
+    "@angular/compiler": "12.1.2",
+    "@angular/compiler-cli": "12.1.2",
+    "@angular/core": "12.1.2",
+    "rxjs": "7.2.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "12.1.2",
+    "@angular-devkit/build-ng-packagr": "0.1002.0",
+    "@angular/animations": "12.1.2",
+    "@angular/cdk": "12.1.2",
+    "@angular/cli": "12.1.2",
+    "@angular/common": "12.1.2",
+    "@angular/compiler": "12.1.2",
+    "@angular/compiler-cli": "12.1.2",
+    "@angular/core": "12.1.2",
+    "@types/d3-shape": "3.0.1",
+    "@types/dagre": "0.7.45",
+    "@types/node": "16.3.2",
+    "cross-env": "7.0.3",
+    "d3-shape": "3.0.1",
+    "dagre": "0.8.5",
+    "ng-packagr": "12.1.2",
+    "rimraf": "3.0.2",
+    "rxjs": "7.2.0",
+    "typescript": "4.3.5"
+  }
+}
