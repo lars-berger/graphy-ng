@@ -1,0 +1,19 @@
+.graph {
+  display: block;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+}
+
+.graph-container {
+  width: 100%;
+  height: 100%;
+}
+
+.node {
+  visibility: hidden;
+
+  &.is-visible {
+    visibility: visible;
+  }
+}

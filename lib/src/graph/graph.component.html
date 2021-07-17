@@ -1,0 +1,40 @@
+<div class="graph" [attr.width]="width" [attr.height]="height">
+  <svg:svg class="graph-container" [attr.viewBox]="stringifiedViewBox$ | async" #graphContainer>
+    <defs class="defs">
+      <ng-container *ngIf="defsTemplate" [ngTemplateOutlet]="defsTemplate"></ng-container>
+    </defs>
+
+    <ng-content></ng-content>
+
+    <svg:g class="nodes-container" #nodesContainer>
+      <svg:g
+        *ngFor="let node of transformedNodes; trackBy: trackById"
+        class="node"
+        [id]="node.id"
+        [class.is-visible]="node.isVisible"
+        [attr.transform]="node.transform"
+        #node
+      >
+        <ng-container
+          *ngIf="nodeTemplate"
+          [ngTemplateOutlet]="nodeTemplate"
+          [ngTemplateOutletContext]="{ $implicit: node }"
+        ></ng-container>
+
+        <svg:circle *ngIf="!nodeTemplate" r="10" [attr.cx]="node.width / 2" [attr.cy]="node.height / 2" />
+      </svg:g>
+    </svg:g>
+
+    <svg:g class="edges-container">
+      <svg:g *ngFor="let edge of transformedEdges; trackBy: trackById" class="edge" [id]="edge.id" #edge>
+        <ng-container
+          *ngIf="edgeTemplate"
+          [ngTemplateOutlet]="edgeTemplate"
+          [ngTemplateOutletContext]="{ $implicit: edge }"
+        ></ng-container>
+
+        <svg:path *ngIf="!edgeTemplate" class="edge" [attr.d]="edge.pathDefinition" />
+      </svg:g>
+    </svg:g>
+  </svg:svg>
+</div>
