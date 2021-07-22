@@ -1,8 +1,8 @@
-<div class="container">
-  <div class="actions-overlay">
-    <strong class="actions-overlay__heading">Actions</strong>
+<div class="app">
+  <div class="actions-sidebar">
+    <strong class="actions-sidebar__heading">Actions</strong>
 
-    <div class="actions-overlay__divider"></div>
+    <div class="actions-sidebar__divider"></div>
 
     <form class="create-edge-form" [formGroup]="createEdgeForm">
       <label>Source Node</label>
@@ -21,7 +21,7 @@
         </option>
       </select>
 
-      <button class="actions-overlay__submit-btn" lib-button (click)="createEdge()">Create edge</button>
+      <button class="actions-sidebar__submit-btn" lib-button (click)="createEdge()">Create edge</button>
     </form>
   </div>
 

@@ -1,17 +1,16 @@
-.container {
+.app {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) 3fr;
   width: 100vw;
   height: 100vh;
   background-color: rgb(245, 245, 245);
   font-family: sans-serif;
+  overflow: hidden;
 }
 
-.actions-overlay {
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
+.actions-sidebar {
   display: flex;
   flex-direction: column;
-  width: 20rem;
   padding: 1.8rem;
   background-color: white;
 
