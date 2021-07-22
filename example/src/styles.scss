@@ -1,7 +1,11 @@
+@use './variables.scss';
+
 /* You can add global styles to this file, and also import other style files */
 
 html {
   box-sizing: border-box;
+  font-family: sans-serif;
+  color: variables.$gray-900;
 }
 
 body {
@@ -12,4 +16,13 @@ body {
 *:before,
 *:after {
   box-sizing: inherit;
+}
+
+button {
+  background-color: variables.$blue;
+  border: none;
+  padding: 0.7rem 1.4rem;
+  border-radius: 4px;
+  color: variables.$gray-100;
+  font-weight: 700;
 }
