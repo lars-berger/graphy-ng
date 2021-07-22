@@ -1,9 +1,17 @@
 <div class="app">
   <div class="actions-sidebar">
-    <strong class="actions-sidebar__heading">Actions</strong>
+    <strong class="actions-sidebar__heading">Create a node</strong>
 
     <div class="actions-sidebar__divider"></div>
 
+    <form class="create-node-form" [formGroup]="createNodeForm">
+      <input class="create-node-form__input" formControlName="title" placeholder="Title" />
+    </form>
+
+    <button class="actions-sidebar__submit-btn" lib-button (click)="createNode()">Create node</button>
+
+    <strong class="actions-sidebar__heading">Create an edge</strong>
+    <div class="actions-sidebar__divider"></div>
     <form class="create-edge-form" [formGroup]="createEdgeForm">
       <label>Source Node</label>
       <select class="create-edge-form__select" formControlName="sourceId">

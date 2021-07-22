@@ -31,12 +31,27 @@ export class AppComponent {
     },
   ];
 
+  createNodeForm: FormGroup = this.fb.group({
+    title: ['', Validators.required],
+  });
+
   createEdgeForm: FormGroup = this.fb.group({
     sourceId: ['', Validators.required],
     targetId: ['', Validators.required],
   });
 
   constructor(private fb: FormBuilder) {}
+
+  createNode(): void {
+    const { title } = this.createNodeForm.value;
+
+    if (title === '') {
+      return;
+    }
+
+    this.nodes = [...this.nodes, { id: uuid(), data: { title } }];
+    this.createNodeForm.reset();
+  }
 
   createEdge(): void {
     const { sourceId, targetId } = this.createEdgeForm.value;

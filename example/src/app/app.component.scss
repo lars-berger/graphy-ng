@@ -15,8 +15,8 @@
   padding: 1.8rem;
   background-color: variables.$white;
 
-  &__btn {
-    margin-bottom: 1rem;
+  &__submit-btn {
+    margin-bottom: 3rem;
   }
 
   &__divider {
@@ -24,6 +24,12 @@
     background-color: variables.$gray-500;
     margin-bottom: 2rem;
   }
+}
+
+.create-node-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 .create-edge-form {
