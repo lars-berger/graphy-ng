@@ -1,9 +1,11 @@
+@use '../variables.scss';
+
 .app {
   display: grid;
   grid-template-columns: minmax(12rem, 1fr) 3fr;
   width: 100vw;
   height: 100vh;
-  background-color: rgb(245, 245, 245);
+  background-color: variables.$background;
   font-family: sans-serif;
   overflow: hidden;
 }
@@ -12,7 +14,7 @@
   display: flex;
   flex-direction: column;
   padding: 1.8rem;
-  background-color: white;
+  background-color: variables.$white;
 
   &__btn {
     margin-bottom: 1rem;
@@ -20,7 +22,7 @@
 
   &__divider {
     height: 1px;
-    background-color: black;
+    background-color: variables.$gray-500;
     margin-bottom: 2rem;
   }
 }
@@ -39,8 +41,8 @@
   align-items: center;
   height: 100%;
   padding: 0 1.8rem;
-  background-color: white;
-  border: 1px solid rgb(210, 210, 210);
+  background-color: variables.$white;
+  border: 1px solid variables.$gray-300;
   border-radius: 4px;
   transition: border 0.2s ease;
   font-weight: 600;
@@ -54,15 +56,15 @@
   &:hover,
   &:focus {
     cursor: pointer;
-    border: 1px solid blue;
+    border: 1px solid variables.$blue;
   }
 }
 
 .edge {
-  stroke: rgb(100, 100, 100);
+  stroke: variables.$gray-600;
   stroke-width: 2;
 }
 
 .arrow {
-  fill: rgb(100, 100, 100);
+  fill: variables.$gray-600;
 }
