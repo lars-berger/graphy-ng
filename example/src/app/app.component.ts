@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-root',
@@ -28,4 +30,22 @@ export class AppComponent {
       targetId: '2',
     },
   ];
+
+  createEdgeForm: FormGroup = this.fb.group({
+    sourceId: ['', Validators.required],
+    targetId: ['', Validators.required],
+  });
+
+  constructor(private fb: FormBuilder) {}
+
+  createEdge(): void {
+    const { sourceId, targetId } = this.createEdgeForm.value;
+
+    if (sourceId === targetId) {
+      return;
+    }
+
+    this.edges = [...this.edges, this.createEdgeForm.value];
+    this.createEdgeForm.reset();
+  }
 }

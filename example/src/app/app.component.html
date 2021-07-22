@@ -1,4 +1,30 @@
 <div class="container">
+  <div class="actions-overlay">
+    <strong class="actions-overlay__heading">Actions</strong>
+
+    <div class="actions-overlay__divider"></div>
+
+    <form class="create-edge-form" [formGroup]="createEdgeForm">
+      <label>Source Node</label>
+      <select class="create-edge-form__select" formControlName="sourceId">
+        <option value="" selected disabled>Select a node</option>
+        <option *ngFor="let node of nodes" [value]="node.id">
+          {{ node.data.title }}
+        </option>
+      </select>
+
+      <label>Target Node</label>
+      <select class="create-edge-form__select" formControlName="targetId" placeholder="Select a node">
+        <option value="" selected disabled>Select a node</option>
+        <option *ngFor="let node of nodes" [value]="node.id">
+          {{ node.data.title }}
+        </option>
+      </select>
+
+      <button class="actions-overlay__submit-btn" lib-button (click)="createEdge()">Create edge</button>
+    </form>
+  </div>
+
   <lib-graph [edges]="edges" [nodes]="nodes">
     <ng-template #defsTemplate>
       <svg:marker

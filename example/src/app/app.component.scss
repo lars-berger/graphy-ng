@@ -5,16 +5,46 @@
   font-family: sans-serif;
 }
 
+.actions-overlay {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  padding: 1.8rem;
+  background-color: white;
+
+  &__btn {
+    margin-bottom: 1rem;
+  }
+
+  &__divider {
+    height: 1px;
+    background-color: black;
+    margin-bottom: 2rem;
+  }
+}
+
+.create-edge-form {
+  display: flex;
+  flex-direction: column;
+
+  &__select {
+    margin-bottom: 1rem;
+  }
+}
+
 .node {
   display: flex;
   align-items: center;
-  justify-content: center;
   height: 100%;
-  padding: 0 20px;
+  padding: 0 1.8rem;
   background-color: white;
   border: 1px solid rgb(210, 210, 210);
   border-radius: 4px;
   transition: border 0.2s ease;
+  font-weight: 600;
 
   &__title {
     white-space: nowrap;
