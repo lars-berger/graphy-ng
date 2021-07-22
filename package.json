@@ -1,5 +1,5 @@
 {
-  "name": "@graphi-ng/monorepo",
+  "name": "@graphy-ng/monorepo",
   "version": "0.0.0",
   "private": true,
   "workspaces": {

@@ -1,5 +1,5 @@
 {
-  "name": "@graphi-ng/example",
+  "name": "@graphy-ng/example",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -21,7 +21,7 @@
     "rxjs": "7.2.0",
     "tslib": "2.3.0",
     "zone.js": "0.11.4",
-    "graphi-ng": "*",
+    "graphy-ng": "*",
     "uuid": "8.3.2"
   },
   "devDependencies": {

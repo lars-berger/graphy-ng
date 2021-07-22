@@ -1,5 +1,5 @@
 {
-  "name": "graphi-ng",
+  "name": "graphy-ng",
   "version": "1.0.0",
   "main": "dist/out-tsc/esm2015/public-api.js",
   "typings": "dist/out-tsc/public-api.d.ts",
