@@ -16,7 +16,7 @@ import {
   SimpleChanges,
   OnDestroy,
 } from '@angular/core';
-import { CurveFactory, curveNatural, line } from 'd3-shape';
+import { curveBasis, CurveFactory, line } from 'd3-shape';
 import * as dagre from 'dagre';
 import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
@@ -43,7 +43,7 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() edges: InputEdge[] = [];
 
   /** The d3.curve used for defining the shape of edges. */
-  @Input() curve: CurveFactory = curveNatural;
+  @Input() curve: CurveFactory = curveBasis;
 
   /** Whether to enable zooming. */
   @Input() enableZooming: boolean = true;
