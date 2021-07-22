@@ -10,34 +10,30 @@
 }
 
 .actions-sidebar {
-  display: flex;
-  flex-direction: column;
   padding: 1.8rem;
   background-color: variables.$white;
+}
 
-  &__submit-btn {
-    margin-bottom: 3rem;
-  }
+.create-node-form,
+.create-edge-form,
+.update-node-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
 
   &__divider {
     height: 1px;
     background-color: variables.$gray-500;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
-}
 
-.create-node-form {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem;
-}
+  &__select,
+  &__input {
+    margin-bottom: 1.5rem;
+  }
 
-.create-edge-form {
-  display: flex;
-  flex-direction: column;
-
-  &__select {
-    margin-bottom: 1rem;
+  &__submit-btn {
+    margin-bottom: 2rem;
   }
 }
 

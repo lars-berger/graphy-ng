@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { v4 as uuid } from 'uuid';
 
@@ -40,6 +40,12 @@ export class AppComponent {
     targetId: ['', Validators.required],
   });
 
+  nodeIdToUpdate: string | null = null;
+
+  updateNodeForm: FormGroup = this.fb.group({
+    title: ['', Validators.required],
+  });
+
   constructor(private fb: FormBuilder) {}
 
   createNode(): void {
@@ -62,5 +68,32 @@ export class AppComponent {
 
     this.edges = [...this.edges, this.createEdgeForm.value];
     this.createEdgeForm.reset();
+  }
+
+  updateNode(): void {
+    const { title } = this.updateNodeForm.value;
+
+    if (title === '') {
+      return;
+    }
+
+    this.nodes = this.nodes.map((node) => {
+      if (node.id !== this.nodeIdToUpdate) {
+        return node;
+      }
+
+      return { id: node.id, data: { title } };
+    });
+
+    this.updateNodeForm.reset();
+    this.nodeIdToUpdate = null;
+  }
+
+  showNodeUpdateForm(nodeId: string): void {
+    this.nodeIdToUpdate = nodeId;
+
+    // Fill the update form with the existing title.
+    const nodeToUpdate = this.nodes.find((node) => node.id === nodeId);
+    this.updateNodeForm.setValue({ title: nodeToUpdate?.data.title });
   }
 }

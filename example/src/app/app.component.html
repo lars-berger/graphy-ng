@@ -1,18 +1,18 @@
 <div class="app">
   <div class="actions-sidebar">
-    <strong class="actions-sidebar__heading">Create a node</strong>
-
-    <div class="actions-sidebar__divider"></div>
-
     <form class="create-node-form" [formGroup]="createNodeForm">
+      <strong class="create-node-form__heading">Create a node</strong>
+      <div class="create-node-form__divider"></div>
+
       <input class="create-node-form__input" formControlName="title" placeholder="Title" />
+
+      <button class="create-node-form__submit-btn" lib-button (click)="createNode()">Create node</button>
     </form>
 
-    <button class="actions-sidebar__submit-btn" lib-button (click)="createNode()">Create node</button>
-
-    <strong class="actions-sidebar__heading">Create an edge</strong>
-    <div class="actions-sidebar__divider"></div>
     <form class="create-edge-form" [formGroup]="createEdgeForm">
+      <strong class="create-edge-form__heading">Create an edge</strong>
+      <div class="create-edge-form__divider"></div>
+
       <label>Source Node</label>
       <select class="create-edge-form__select" formControlName="sourceId">
         <option value="" selected disabled>Select a node</option>
@@ -29,7 +29,16 @@
         </option>
       </select>
 
-      <button class="actions-sidebar__submit-btn" lib-button (click)="createEdge()">Create edge</button>
+      <button class="create-edge-form__submit-btn" lib-button (click)="createEdge()">Create edge</button>
+    </form>
+
+    <form class="update-node-form" [formGroup]="updateNodeForm" *ngIf="nodeIdToUpdate">
+      <strong class="update-node-form__heading">Update a node</strong>
+      <div class="update-node-form__divider"></div>
+
+      <input class="update-node-form__input" formControlName="title" placeholder="Title" />
+
+      <button class="update-node-form__submit-btn" lib-button (click)="updateNode()">Update node</button>
     </form>
   </div>
 
@@ -50,7 +59,7 @@
     </ng-template>
 
     <ng-template #nodeTemplate let-node>
-      <svg:g xmlns="http://www.w3.org/2000/xhtml" width="400" height="80">
+      <svg:g xmlns="http://www.w3.org/2000/xhtml" width="400" height="80" (click)="showNodeUpdateForm(node.id)">
         <svg:foreignObject width="400" height="80">
           <xhtml:div class="node" xmlns="http://www.w3.org/1999/xhtml">
             <p class="node__title">{{ node.data.title }}</p>
