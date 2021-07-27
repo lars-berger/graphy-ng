@@ -1,6 +1,6 @@
 {
   "name": "graphy-ng",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/out-tsc/esm2015/public-api.js",
   "typings": "dist/out-tsc/public-api.d.ts",
   "scripts": {
@@ -20,6 +20,8 @@
     "@angular/compiler": "12.1.2",
     "@angular/compiler-cli": "12.1.2",
     "@angular/core": "12.1.2",
+    "d3-shape": "3.0.1",
+    "dagre": "0.8.5",
     "rxjs": "7.2.0"
   },
   "devDependencies": {
@@ -36,8 +38,6 @@
     "@types/dagre": "0.7.45",
     "@types/node": "16.3.2",
     "cross-env": "7.0.3",
-    "d3-shape": "3.0.1",
-    "dagre": "0.8.5",
     "ng-packagr": "12.1.2",
     "rimraf": "3.0.2",
     "rxjs": "7.2.0",
