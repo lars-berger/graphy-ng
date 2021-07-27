@@ -7,7 +7,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "deploy:stackblitz": "tsc -p ./scripts/tsconfig.json && node ./dist/out-scripts/stackblitz-deploy.js"
   },
   "dependencies": {
     "@angular/animations": "12.1.2",
