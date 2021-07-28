@@ -1,17 +1,17 @@
-@use '../variables.scss';
+@import '../variables.scss';
 
 .app {
   display: grid;
   grid-template-columns: minmax(12rem, 1fr) 3fr;
   width: 100vw;
   height: 100vh;
-  background-color: variables.$background;
+  background-color: $background;
   overflow: hidden;
 }
 
 .actions-sidebar {
   padding: 1.8rem;
-  background-color: variables.$white;
+  background-color: $white;
 }
 
 .create-node-form,
@@ -23,7 +23,7 @@
 
   &__divider {
     height: 1px;
-    background-color: variables.$gray-500;
+    background-color: $gray-500;
     margin-bottom: 1.5rem;
   }
 
@@ -42,8 +42,8 @@
   align-items: center;
   height: 100%;
   padding: 0 1.8rem;
-  background-color: variables.$white;
-  border: 1px solid variables.$gray-300;
+  background-color: $white;
+  border: 1px solid $gray-300;
   border-radius: 4px;
   transition: border 0.2s ease;
   font-weight: 600;
@@ -57,15 +57,15 @@
   &:hover,
   &:focus {
     cursor: pointer;
-    border: 1px solid variables.$blue;
+    border: 1px solid $blue;
   }
 }
 
 .edge {
-  stroke: variables.$gray-600;
+  stroke: $gray-600;
   stroke-width: 2;
 }
 
 .arrow {
-  fill: variables.$gray-600;
+  fill: $gray-600;
 }
