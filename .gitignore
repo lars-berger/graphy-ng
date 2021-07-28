@@ -1,5 +1,10 @@
 # Compiled output
 **/dist
+**/build
+
+# Generated files
+**/.docusaurus
+**/.cache-loader
 
 # Dependencies
 **/node_modules
