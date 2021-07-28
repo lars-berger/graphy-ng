@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-root',
@@ -55,7 +54,7 @@ export class AppComponent {
       return;
     }
 
-    this.nodes = [...this.nodes, { id: uuid(), data: { title } }];
+    this.nodes = [...this.nodes, { id: this.createNodeId(), data: { title } }];
     this.createNodeForm.reset();
   }
 
@@ -95,5 +94,13 @@ export class AppComponent {
     // Fill the update form with the existing title.
     const nodeToUpdate = this.nodes.find((node) => node.id === nodeId);
     this.updateNodeForm.setValue({ title: nodeToUpdate?.data.title });
+  }
+
+  /**
+   * Generate a semi-random alphanumeric string for use as node ID's. Can be
+   * substituted with `uuid` package or something similar.
+   */
+  createNodeId(): string {
+    return Math.random().toString(36).slice(2);
   }
 }
