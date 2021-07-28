@@ -3,5 +3,6 @@
   "dest": "./dist/out-tsc",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": ["d3-shape", "dagre"]
 }
