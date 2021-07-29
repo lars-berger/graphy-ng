@@ -34,14 +34,6 @@ import { DefsTemplateDirective, EdgeTemplateDirective, NodeTemplateDirective } f
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GraphComponent<NData, EData> implements AfterViewInit, OnChanges, OnDestroy {
-  /** The array of nodes to display in the graph. */
-  // TODO: Rename property to `inputNodes`.
-  @Input() nodes: InputNode<NData>[] = [];
-
-  /** The array of edges to display in the graph. */
-  // TODO: Rename property to `inputEdges`.
-  @Input() edges: InputEdge<EData>[] = [];
-
   /** The d3.curve used for defining the shape of edges. */
   @Input() curve: CurveFactory = curveBasis;
 
@@ -103,6 +95,16 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnChanges, O
 
   transformedNodes: TransformedNode[] = [];
   transformedEdges: TransformedEdge[] = [];
+
+  /** The array of nodes to display in the graph. */
+  private get inputNodes(): InputNode<NData>[] {
+    return this.nodeTemplate.inputNodes;
+  }
+
+  /** The array of edges to display in the graph. */
+  private get inputEdges(): InputEdge<EData>[] {
+    return this.edgeTemplate.inputEdges;
+  }
 
   constructor(private el: ElementRef<HTMLElement>, private cd: ChangeDetectorRef) {}
 
@@ -181,7 +183,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnChanges, O
       this.renderNodesOffscreen();
     }
 
-    for (let node of this.nodes) {
+    for (let node of this.inputNodes) {
       // The dimensions of every node need to be known before passing it to the layout engine.
       if (this.nodeTemplate) {
         const { width, height } = this.getNodeDimensions(node.id);
@@ -193,7 +195,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnChanges, O
       }
     }
 
-    for (let edge of this.edges) {
+    for (let edge of this.inputEdges) {
       graph.setEdge(edge.sourceId, edge.targetId);
     }
 
@@ -211,7 +213,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnChanges, O
       transform: `translate(${node.value.x - node.value.width / 2}, ${node.value.y - node.value.height / 2})`,
       isVisible: true,
       data: {
-        ...this.nodes.find((e) => e.id === node.v).data,
+        ...this.inputNodes.find((e) => e.id === node.v).data,
       },
     }));
 
@@ -238,7 +240,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnChanges, O
     // The node width, height, x, and y values provided here are completely arbitrary. The point
     // is to render the nodes in the DOM to see what width/height they will actually take up and
     // later provide that to the layout engine.
-    this.transformedNodes = this.nodes.map((node) => ({
+    this.transformedNodes = this.inputNodes.map((node) => ({
       id: node.id,
       width: 1,
       height: 1,

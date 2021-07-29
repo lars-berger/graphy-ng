@@ -16,7 +16,8 @@ export class DefsTemplateDirective {
   selector: '[nodeTemplate]',
 })
 export class NodeTemplateDirective<T> {
-  @Input() nodeTemplateNodes: InputNode<T>[];
+  /** The array of nodes to display in the graph. */
+  @Input('nodeTemplateNodes') inputNodes: InputNode<T>[] = [];
 
   static ngTemplateContextGuard<T>(dir: NodeTemplateDirective<T>, ctx: any): ctx is NodeTemplateContext<T> {
     return true;
@@ -29,7 +30,8 @@ export class NodeTemplateDirective<T> {
   selector: '[edgeTemplate]',
 })
 export class EdgeTemplateDirective<T> {
-  @Input() edgeTemplateEdges: InputEdge<T>[];
+  /** The array of edges to display in the graph. */
+  @Input('edgeTemplateEdges') inputEdges: InputEdge<T>[] = [];
 
   static ngTemplateContextGuard<T>(dir: EdgeTemplateDirective<T>, ctx: unknown): ctx is EdgeTemplateContext<T> {
     return true;
