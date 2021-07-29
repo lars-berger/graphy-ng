@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Input,
   ContentChild,
-  TemplateRef,
   ElementRef,
   EventEmitter,
   QueryList,
@@ -26,6 +25,7 @@ import { InputNode } from './models/input-node.model';
 import { TransformedEdge } from './models/transformed-edge.model';
 import { TransformedNode } from './models/transformed-node.model';
 import { ViewBox } from './models/view-box.model';
+import { DefsTemplateDirective, EdgeTemplateDirective, NodeTemplateDirective } from './templates';
 
 @Component({
   selector: 'lib-graph',
@@ -33,14 +33,14 @@ import { ViewBox } from './models/view-box.model';
   styleUrls: ['./graph.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
+export class GraphComponent<NData extends object, EData extends object> implements AfterViewInit, OnChanges, OnDestroy {
   /** The array of nodes to display in the graph. */
   // TODO: Rename property to `inputNodes`.
-  @Input() nodes: InputNode[] = [];
+  @Input() nodes: InputNode<NData>[] = [];
 
   /** The array of edges to display in the graph. */
   // TODO: Rename property to `inputEdges`.
-  @Input() edges: InputEdge[] = [];
+  @Input() edges: InputEdge<EData>[] = [];
 
   /** The d3.curve used for defining the shape of edges. */
   @Input() curve: CurveFactory = curveBasis;
@@ -75,9 +75,9 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
   /** Event emitted on component destroy. */
   private readonly onDestroy$: Subject<void> = new Subject();
 
-  @ContentChild('defsTemplate') defsTemplate: TemplateRef<any>;
-  @ContentChild('edgeTemplate') edgeTemplate: TemplateRef<any>;
-  @ContentChild('nodeTemplate') nodeTemplate: TemplateRef<any>;
+  @ContentChild(DefsTemplateDirective) defsTemplate: DefsTemplateDirective;
+  @ContentChild(EdgeTemplateDirective) edgeTemplate: EdgeTemplateDirective<EData>;
+  @ContentChild(NodeTemplateDirective) nodeTemplate: NodeTemplateDirective<NData>;
 
   @ViewChild('graphContainer') graphContainer: ElementRef<SVGSVGElement>;
   @ViewChild('nodesContainer') nodesContainer: ElementRef<SVGSVGElement>;

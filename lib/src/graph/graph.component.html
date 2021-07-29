@@ -1,7 +1,7 @@
 <div class="graph" [attr.width]="width" [attr.height]="height">
   <svg:svg class="graph-container" [attr.viewBox]="stringifiedViewBox$ | async" #graphContainer>
     <defs class="defs">
-      <ng-container *ngIf="defsTemplate" [ngTemplateOutlet]="defsTemplate"></ng-container>
+      <ng-container *ngIf="defsTemplate" [ngTemplateOutlet]="defsTemplate.template"></ng-container>
     </defs>
 
     <ng-content></ng-content>
@@ -17,7 +17,7 @@
       >
         <ng-container
           *ngIf="nodeTemplate"
-          [ngTemplateOutlet]="nodeTemplate"
+          [ngTemplateOutlet]="nodeTemplate.template"
           [ngTemplateOutletContext]="{ $implicit: node }"
         ></ng-container>
 
@@ -29,7 +29,7 @@
       <svg:g *ngFor="let edge of transformedEdges; trackBy: trackById" class="edge" [id]="edge.id" #edge>
         <ng-container
           *ngIf="edgeTemplate"
-          [ngTemplateOutlet]="edgeTemplate"
+          [ngTemplateOutlet]="edgeTemplate.template"
           [ngTemplateOutletContext]="{ $implicit: edge }"
         ></ng-container>
 
