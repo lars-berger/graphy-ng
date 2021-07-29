@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Input,
   ContentChild,
-  TemplateRef,
   ElementRef,
   EventEmitter,
   QueryList,
@@ -12,13 +11,11 @@ import {
   Output,
   ChangeDetectorRef,
   AfterViewInit,
-  OnChanges,
-  SimpleChanges,
   OnDestroy,
 } from '@angular/core';
 import { curveBasis, CurveFactory, line } from 'd3-shape';
 import * as dagre from 'dagre';
-import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { InputEdge } from './models/input-edge.model';
@@ -26,6 +23,7 @@ import { InputNode } from './models/input-node.model';
 import { TransformedEdge } from './models/transformed-edge.model';
 import { TransformedNode } from './models/transformed-node.model';
 import { ViewBox } from './models/view-box.model';
+import { DefsTemplateDirective, EdgeTemplateDirective, NodeTemplateDirective } from './templates';
 
 @Component({
   selector: 'lib-graph',
@@ -33,15 +31,7 @@ import { ViewBox } from './models/view-box.model';
   styleUrls: ['./graph.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
-  /** The array of nodes to display in the graph. */
-  // TODO: Rename property to `inputNodes`.
-  @Input() nodes: InputNode[] = [];
-
-  /** The array of edges to display in the graph. */
-  // TODO: Rename property to `inputEdges`.
-  @Input() edges: InputEdge[] = [];
-
+export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   /** The d3.curve used for defining the shape of edges. */
   @Input() curve: CurveFactory = curveBasis;
 
@@ -72,12 +62,12 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
   /** Event emitted when the graph is being panned. */
   @Output() readonly onPan: EventEmitter<void> = new EventEmitter();
 
-  /** Event emitted on component destroy. */
+  /** Subject that emits when the component has been destroyed. */
   private readonly onDestroy$: Subject<void> = new Subject();
 
-  @ContentChild('defsTemplate') defsTemplate: TemplateRef<any>;
-  @ContentChild('edgeTemplate') edgeTemplate: TemplateRef<any>;
-  @ContentChild('nodeTemplate') nodeTemplate: TemplateRef<any>;
+  @ContentChild(DefsTemplateDirective) defsTemplate: DefsTemplateDirective;
+  @ContentChild(EdgeTemplateDirective) edgeTemplate: EdgeTemplateDirective<EData>;
+  @ContentChild(NodeTemplateDirective) nodeTemplate: NodeTemplateDirective<NData>;
 
   @ViewChild('graphContainer') graphContainer: ElementRef<SVGSVGElement>;
   @ViewChild('nodesContainer') nodesContainer: ElementRef<SVGSVGElement>;
@@ -104,6 +94,16 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
   transformedNodes: TransformedNode[] = [];
   transformedEdges: TransformedEdge[] = [];
 
+  /** The array of nodes to display in the graph. */
+  private get inputNodes(): InputNode<NData>[] {
+    return this.nodeTemplate.inputNodes;
+  }
+
+  /** The array of edges to display in the graph. */
+  private get inputEdges(): InputEdge<EData>[] {
+    return this.edgeTemplate.inputEdges;
+  }
+
   constructor(private el: ElementRef<HTMLElement>, private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
@@ -122,22 +122,15 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
     if (this.centerOnChanges) {
       this.center();
     }
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const isFirstChange: boolean = Object.values(changes).every((change) => change.firstChange === true);
+    // Re-render the graph on any changes to nodes or edges.
+    merge(this.edgeTemplate.onEdgeChanges$, this.nodeTemplate.onNodeChanges$).subscribe(() => {
+      this.renderGraph();
 
-    // Ignore the initialisation of inputs.
-    if (isFirstChange) {
-      return;
-    }
-
-    // Re-render the graph on any changes to nodes, edges, or the graph config.
-    this.renderGraph();
-
-    if (this.centerOnChanges) {
-      this.center();
-    }
+      if (this.centerOnChanges) {
+        this.center();
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -181,7 +174,7 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
       this.renderNodesOffscreen();
     }
 
-    for (let node of this.nodes) {
+    for (let node of this.inputNodes) {
       // The dimensions of every node need to be known before passing it to the layout engine.
       if (this.nodeTemplate) {
         const { width, height } = this.getNodeDimensions(node.id);
@@ -193,7 +186,7 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
       }
     }
 
-    for (let edge of this.edges) {
+    for (let edge of this.inputEdges) {
       graph.setEdge(edge.sourceId, edge.targetId);
     }
 
@@ -211,7 +204,7 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
       transform: `translate(${node.value.x - node.value.width / 2}, ${node.value.y - node.value.height / 2})`,
       isVisible: true,
       data: {
-        ...this.nodes.find((e) => e.id === node.v).data,
+        ...this.inputNodes.find((e) => e.id === node.v).data,
       },
     }));
 
@@ -238,7 +231,7 @@ export class GraphComponent implements AfterViewInit, OnChanges, OnDestroy {
     // The node width, height, x, and y values provided here are completely arbitrary. The point
     // is to render the nodes in the DOM to see what width/height they will actually take up and
     // later provide that to the layout engine.
-    this.transformedNodes = this.nodes.map((node) => ({
+    this.transformedNodes = this.inputNodes.map((node) => ({
       id: node.id,
       width: 1,
       height: 1,
