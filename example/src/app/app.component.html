@@ -43,7 +43,7 @@
   </div>
 
   <lib-graph [edges]="edges" [nodes]="nodes">
-    <ng-template #defsTemplate>
+    <ng-container *defsTemplate>
       <svg:marker
         class="arrow"
         id="arrow"
@@ -56,9 +56,9 @@
       >
         <svg:path d="M0,-5L10,0L0,5" />
       </svg:marker>
-    </ng-template>
+    </ng-container>
 
-    <ng-template #nodeTemplate let-node>
+    <ng-container *nodeTemplate="let node">
       <svg:g xmlns="http://www.w3.org/2000/xhtml" width="400" height="80" (click)="showNodeUpdateForm(node.id)">
         <svg:foreignObject width="400" height="80">
           <xhtml:div class="node" xmlns="http://www.w3.org/1999/xhtml">
@@ -66,12 +66,12 @@
           </xhtml:div>
         </svg:foreignObject>
       </svg:g>
-    </ng-template>
+    </ng-container>
 
-    <ng-template #edgeTemplate let-edge>
+    <ng-container *edgeTemplate="let edge">
       <svg:g class="edge">
         <svg:path class="edge__line" marker-end="url(#arrow)" [attr.d]="edge.pathDefinition"></svg:path>
       </svg:g>
-    </ng-template>
+    </ng-container>
   </lib-graph>
 </div>
