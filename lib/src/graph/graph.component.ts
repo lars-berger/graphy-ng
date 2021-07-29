@@ -11,13 +11,11 @@ import {
   Output,
   ChangeDetectorRef,
   AfterViewInit,
-  OnChanges,
-  SimpleChanges,
   OnDestroy,
 } from '@angular/core';
 import { curveBasis, CurveFactory, line } from 'd3-shape';
 import * as dagre from 'dagre';
-import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { InputEdge } from './models/input-edge.model';
@@ -33,7 +31,7 @@ import { DefsTemplateDirective, EdgeTemplateDirective, NodeTemplateDirective } f
   styleUrls: ['./graph.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GraphComponent<NData, EData> implements AfterViewInit, OnChanges, OnDestroy {
+export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   /** The d3.curve used for defining the shape of edges. */
   @Input() curve: CurveFactory = curveBasis;
 
@@ -64,7 +62,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnChanges, O
   /** Event emitted when the graph is being panned. */
   @Output() readonly onPan: EventEmitter<void> = new EventEmitter();
 
-  /** Event emitted on component destroy. */
+  /** Subject that emits when the component has been destroyed. */
   private readonly onDestroy$: Subject<void> = new Subject();
 
   @ContentChild(DefsTemplateDirective) defsTemplate: DefsTemplateDirective;
@@ -124,22 +122,15 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnChanges, O
     if (this.centerOnChanges) {
       this.center();
     }
-  }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const isFirstChange: boolean = Object.values(changes).every((change) => change.firstChange === true);
+    // Re-render the graph on any changes to nodes or edges.
+    merge(this.edgeTemplate.onEdgeChanges$, this.nodeTemplate.onNodeChanges$).subscribe(() => {
+      this.renderGraph();
 
-    // Ignore the initialisation of inputs.
-    if (isFirstChange) {
-      return;
-    }
-
-    // Re-render the graph on any changes to nodes, edges, or the graph config.
-    this.renderGraph();
-
-    if (this.centerOnChanges) {
-      this.center();
-    }
+      if (this.centerOnChanges) {
+        this.center();
+      }
+    });
   }
 
   ngOnDestroy(): void {
