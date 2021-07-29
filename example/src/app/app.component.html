@@ -17,7 +17,7 @@
       <select class="create-edge-form__select" formControlName="sourceId">
         <option value="" selected disabled>Select a node</option>
         <option *ngFor="let node of nodes" [value]="node.id">
-          {{ node.data.title }}
+          {{ node.data?.title }}
         </option>
       </select>
 
@@ -25,7 +25,7 @@
       <select class="create-edge-form__select" formControlName="targetId" placeholder="Select a node">
         <option value="" selected disabled>Select a node</option>
         <option *ngFor="let node of nodes" [value]="node.id">
-          {{ node.data.title }}
+          {{ node.data?.title }}
         </option>
       </select>
 

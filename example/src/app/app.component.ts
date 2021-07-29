@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { InputEdge, InputNode } from 'graphy-ng';
+
+interface NodeData {
+  title: string;
+}
 
 @Component({
   selector: 'app-root',
@@ -7,7 +12,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  nodes = [
+  nodes: InputNode<NodeData>[] = [
     {
       id: '1',
       data: {
@@ -22,7 +27,7 @@ export class AppComponent {
     },
   ];
 
-  edges = [
+  edges: InputEdge[] = [
     {
       id: '1',
       sourceId: '1',
@@ -93,7 +98,7 @@ export class AppComponent {
 
     // Fill the update form with the existing title.
     const nodeToUpdate = this.nodes.find((node) => node.id === nodeId);
-    this.updateNodeForm.setValue({ title: nodeToUpdate?.data.title });
+    this.updateNodeForm.setValue({ title: nodeToUpdate?.data?.title });
   }
 
   /**
