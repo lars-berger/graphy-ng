@@ -1,4 +1,4 @@
-export interface TransformedNode<T extends object = {}> {
+export interface TransformedNode<T = {}> {
   id: string;
   width: number;
   height: number;
@@ -6,5 +6,5 @@ export interface TransformedNode<T extends object = {}> {
   y: number;
   transform: string;
   isVisible: boolean;
-  data?: T;
+  data: T;
 }

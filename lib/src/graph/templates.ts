@@ -1,7 +1,9 @@
-import { Directive, TemplateRef } from '@angular/core';
-import { TransformedEdge } from './models/transformed-edge.model';
+import { Directive, Input, TemplateRef } from '@angular/core';
 
-import { TransformedNode } from './models/transformed-node.model';
+import { EdgeTemplateContext } from './models/edge-template-context.model';
+import { InputEdge } from './models/input-edge.model';
+import { InputNode } from './models/input-node.model';
+import { NodeTemplateContext } from './models/node-template-context.model';
 
 @Directive({
   selector: '[defsTemplate]',
@@ -10,35 +12,26 @@ export class DefsTemplateDirective {
   constructor(public template: TemplateRef<any>) {}
 }
 
-interface NodeTemplateContext<T extends object> {
-  $implicit: TransformedNode<T>;
-}
-
 @Directive({
   selector: '[nodeTemplate]',
 })
 export class NodeTemplateDirective<T> {
-  static ngTemplateContextGuard<T extends object>(
-    dir: NodeTemplateDirective<T>,
-    ctx: unknown,
-  ): ctx is NodeTemplateContext<T> {
+  @Input() nodeTemplateNodes: InputNode<T>[];
+
+  static ngTemplateContextGuard<T>(dir: NodeTemplateDirective<T>, ctx: any): ctx is NodeTemplateContext<T> {
     return true;
   }
 
   constructor(public template: TemplateRef<any>) {}
-}
-interface EdgeTemplateContext<T extends object> {
-  $implicit: TransformedEdge<T>;
 }
 
 @Directive({
   selector: '[edgeTemplate]',
 })
 export class EdgeTemplateDirective<T> {
-  static ngTemplateContextGuard<T extends object>(
-    dir: EdgeTemplateDirective<T>,
-    ctx: unknown,
-  ): ctx is EdgeTemplateContext<T> {
+  @Input() edgeTemplateEdges: InputEdge<T>[];
+
+  static ngTemplateContextGuard<T>(dir: EdgeTemplateDirective<T>, ctx: unknown): ctx is EdgeTemplateContext<T> {
     return true;
   }
 

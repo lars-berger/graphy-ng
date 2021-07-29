@@ -1,4 +1,4 @@
-export interface InputEdge<T extends object = {}> {
+export interface InputEdge<T = void> {
   id: string;
   sourceId: string;
   targetId: string;

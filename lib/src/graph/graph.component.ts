@@ -33,7 +33,7 @@ import { DefsTemplateDirective, EdgeTemplateDirective, NodeTemplateDirective } f
   styleUrls: ['./graph.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GraphComponent<NData extends object, EData extends object> implements AfterViewInit, OnChanges, OnDestroy {
+export class GraphComponent<NData, EData> implements AfterViewInit, OnChanges, OnDestroy {
   /** The array of nodes to display in the graph. */
   // TODO: Rename property to `inputNodes`.
   @Input() nodes: InputNode<NData>[] = [];
