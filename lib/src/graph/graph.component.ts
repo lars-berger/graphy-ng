@@ -194,18 +194,23 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
 
     const { edges, nodes } = dagre.graphlib.json.write(graph);
 
-    this.transformedNodes = nodes.map((node) => ({
-      id: node.v,
-      width: node.value.width,
-      height: node.value.height,
-      x: node.value.x,
-      y: node.value.y,
-      transform: `translate(${node.value.x - node.value.width / 2}, ${node.value.y - node.value.height / 2})`,
-      isVisible: true,
-      data: {
-        ...this.inputNodes.find((e) => e.id === node.v).data,
-      },
-    }));
+    this.transformedNodes = nodes.map((node) => {
+      const inputNode: InputNode<NData> = this.getInputNode(node.v);
+      const { width, height, x, y } = node.value;
+
+      return {
+        id: inputNode.id,
+        width: width,
+        height: height,
+        x: x,
+        y: y,
+        transform: `translate(${x - width / 2}, ${y - height / 2})`,
+        isVisible: true,
+        data: {
+          ...inputNode.data,
+        },
+      };
+    });
 
     this.transformedEdges = edges.map((edge) => {
       // TODO: Move this out to its own method.
@@ -214,19 +219,31 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
         .y((d) => d.y)
         .curve(this.curve);
 
+      const inputEdge: InputEdge<EData> = this.getInputEdge(edge.v, edge.w);
+
       return {
-        // TODO: Replace with the user-provided id.
-        id: '',
+        id: inputEdge.id,
         sourceId: edge.v,
         targetId: edge.w,
         pathDefinition: lineFunction(edge.value.points),
-        // TODO: Replace with the user-provided data.
-        data: {},
+        data: {
+          ...inputEdge.data,
+        },
       };
     });
 
     // Not sure why this is needed.
     this.cd.detectChanges();
+  }
+
+  /** Get an input node by its ID. */
+  private getInputNode(id: string) {
+    return this.inputNodes.find((node) => node.id === id);
+  }
+
+  /** Get an input edge by its source ID and target ID. */
+  private getInputEdge(sourceId: string, targetId: string) {
+    return this.inputEdges.find((edge) => edge.sourceId === sourceId && edge.targetId === targetId);
   }
 
   private renderNodesOffscreen() {
