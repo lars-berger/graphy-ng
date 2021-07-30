@@ -192,7 +192,6 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
 
     dagre.layout(graph);
 
-    // TODO: Add definition file for `write` method.
     const { edges, nodes } = dagre.graphlib.json.write(graph);
 
     this.transformedNodes = nodes.map((node) => ({
@@ -216,10 +215,13 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
         .curve(this.curve);
 
       return {
+        // TODO: Replace with the user-provided id.
+        id: '',
         sourceId: edge.v,
         targetId: edge.w,
         pathDefinition: lineFunction(edge.value.points),
-        // TODO: Need to add data property.
+        // TODO: Replace with the user-provided data.
+        data: {},
       };
     });
 
