@@ -104,6 +104,14 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     return this.edgeTemplate.inputEdges;
   }
 
+  /** Get the curve interpolation function for the edge lines. */
+  private get curveInterpolationFn() {
+    return line<{ x; y }>()
+      .x((d) => d.x)
+      .y((d) => d.y)
+      .curve(this.curve);
+  }
+
   constructor(private el: ElementRef<HTMLElement>, private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
@@ -213,19 +221,13 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     });
 
     this.transformedEdges = edges.map((edge) => {
-      // TODO: Move this out to its own method.
-      const lineFunction = line<{ x; y }>()
-        .x((d) => d.x)
-        .y((d) => d.y)
-        .curve(this.curve);
-
       const inputEdge: InputEdge<EData> = this.getInputEdge(edge.v, edge.w);
 
       return {
         id: inputEdge.id,
         sourceId: edge.v,
         targetId: edge.w,
-        pathDefinition: lineFunction(edge.value.points),
+        pathDefinition: this.curveInterpolationFn(edge.value.points),
         data: {
           ...inputEdge.data,
         },
