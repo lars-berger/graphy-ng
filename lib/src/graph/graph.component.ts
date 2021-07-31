@@ -91,8 +91,8 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     map((viewBox) => `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`),
   );
 
-  transformedNodes: TransformedNode[] = [];
-  transformedEdges: TransformedEdge[] = [];
+  transformedNodes: TransformedNode<NData>[] = [];
+  transformedEdges: TransformedEdge<EData>[] = [];
 
   /** The array of nodes to display in the graph. */
   private get inputNodes(): InputNode<NData>[] {
@@ -104,7 +104,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     return this.edgeTemplate.inputEdges;
   }
 
-  /** Get the curve interpolation function for the edge lines. */
+  /** Get the curve interpolation function for edge lines. */
   private get curveInterpolationFn() {
     return line<{ x; y }>()
       .x((d) => d.x)
@@ -167,37 +167,9 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
 
   /** Render nodes and edges in the SVG viewbox. */
   renderGraph() {
-    const graph = new dagre.graphlib.Graph();
+    const graph: dagre.graphlib.Graph = this.createDagreGraph();
 
-    graph.setGraph({
-      marginx: 0,
-      marginy: 0,
-      rankdir: 'TB',
-      align: 'UL',
-    });
-
-    graph.setDefaultEdgeLabel(() => ({}));
-
-    if (this.nodeTemplate) {
-      this.renderNodesOffscreen();
-    }
-
-    for (let node of this.inputNodes) {
-      // The dimensions of every node need to be known before passing it to the layout engine.
-      if (this.nodeTemplate) {
-        const { width, height } = this.getNodeDimensions(node.id);
-
-        graph.setNode(node.id, { width, height });
-      } else {
-        // TODO: Change width and height here to whatever the default node width/height is.
-        graph.setNode(node.id, { width: 10, height: 10 });
-      }
-    }
-
-    for (let edge of this.inputEdges) {
-      graph.setEdge(edge.sourceId, edge.targetId);
-    }
-
+    // Update edges and nodes with layout information.
     dagre.layout(graph);
 
     const { edges, nodes } = dagre.graphlib.json.write(graph);
@@ -238,6 +210,38 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     this.cd.detectChanges();
   }
 
+  private createDagreGraph(): dagre.graphlib.Graph {
+    const graph = new dagre.graphlib.Graph();
+
+    // TODO: Allow orientation and direction to be passed as inputs.
+    graph.setGraph({
+      marginx: 0,
+      marginy: 0,
+      rankdir: 'TB',
+      align: 'UL',
+    });
+
+    // Default to assigning a new object as a label for each new edge.
+    graph.setDefaultEdgeLabel(() => ({}));
+
+    if (this.nodeTemplate) {
+      this.renderNodesOffscreen();
+    }
+
+    // The dimensions of every node needs to be known before passing it to the layout engine.
+    for (let node of this.inputNodes) {
+      const { width, height } = this.getNodeDimensions(node.id);
+
+      graph.setNode(node.id, { width, height });
+    }
+
+    for (let edge of this.inputEdges) {
+      graph.setEdge(edge.sourceId, edge.targetId);
+    }
+
+    return graph;
+  }
+
   /** Get an input node by its ID. */
   private getInputNode(id: string) {
     return this.inputNodes.find((node) => node.id === id);
@@ -268,8 +272,14 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  /** Get the dimensions of a node element rendered in the template. */
+  /** Get the dimensions of a node element. */
   private getNodeDimensions(nodeId: string): DOMRect {
+    if (!this.nodeTemplate) {
+      // TODO: Change width and height here to whatever the default node width/height is.
+      return new DOMRect(0, 0, 10, 10);
+    }
+
+    // Query the DOM for the rendered node element.
     const nodeEl: ElementRef<SVGSVGElement> = this.nodeElements.find((el) => el.nativeElement.id === nodeId);
 
     return nodeEl.nativeElement.getBBox();
