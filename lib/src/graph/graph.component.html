@@ -21,7 +21,7 @@
           [ngTemplateOutletContext]="{ $implicit: node }"
         ></ng-container>
 
-        <svg:circle *ngIf="!nodeTemplate" r="10" [attr.cx]="node.width / 2" [attr.cy]="node.height / 2" />
+        <svg:circle *ngIf="!nodeTemplate" r="10" [attr.cx]="defaultNodeSize / 2" [attr.cy]="defaultNodeSize / 2" />
       </svg:g>
     </svg:g>
 

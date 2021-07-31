@@ -117,6 +117,9 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     return this.edgeTemplate.inputEdges;
   }
 
+  /** Height/width of nodes if a custom template is not provided. */
+  readonly defaultNodeSize: number = 10;
+
   /** The curve interpolation function for edge lines. */
   private get curveInterpolationFn() {
     return line<{ x; y }>()
@@ -272,10 +275,10 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     // later provide that to the layout engine.
     this.transformedNodes = this.inputNodes.map((node) => ({
       id: node.id,
-      width: 1,
-      height: 1,
-      x: 1,
-      y: 1,
+      width: this.defaultNodeSize,
+      height: this.defaultNodeSize,
+      x: 0,
+      y: 0,
       transform: '',
       isVisible: false,
       data: {
@@ -287,16 +290,17 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
 
   /** Get the dimensions of a node element. */
-  private getNodeDimensions(nodeId: string): DOMRect {
+  private getNodeDimensions(nodeId: string): Readonly<{ width: number; height: number }> {
+    // Nodes have a default width/height if a custom template isn't used.
     if (!this.nodeTemplate) {
-      // TODO: Change width and height here to whatever the default node width/height is.
-      return new DOMRect(0, 0, 10, 10);
+      return { width: this.defaultNodeSize, height: this.defaultNodeSize };
     }
 
     // Query the DOM for the rendered node element.
     const nodeEl: ElementRef<SVGSVGElement> = this.nodeElements.find((el) => el.nativeElement.id === nodeId);
 
-    return nodeEl.nativeElement.getBBox();
+    const { width, height } = nodeEl.nativeElement.getBBox();
+    return { width, height };
   }
 
   private registerZoomListener() {
