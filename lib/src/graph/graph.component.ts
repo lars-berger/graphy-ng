@@ -17,6 +17,7 @@ import { curveBasis, CurveFactory, line } from 'd3-shape';
 import * as dagre from 'dagre';
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { GraphDirection } from './models/graph-direction.model';
 
 import { InputEdge } from './models/input-edge.model';
 import { InputNode } from './models/input-node.model';
@@ -45,13 +46,25 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   @Input() zoomSpeed: number = 0.1;
 
   /** Whether to center the graph on any input changes. */
-  @Input() centerOnChanges: boolean = true;
+  @Input() centerOnChanges: boolean = false;
 
-  /** Width of the graph (eg. '600px'). */
+  /** The width of the graph (eg. '600px'). */
   @Input() width: string = '100%';
 
-  /** Height of the graph (eg. '600px'). */
+  /** The height of the graph (eg. '600px'). */
   @Input() height: string = '100%';
+
+  /**
+   * The direction of the graph layout. For example, using `GraphOrientation.LEFT_TO_RIGHT` in an
+   * acyclic graph will cause edges to point from the left to the right.
+   */
+  @Input() direction: GraphDirection = GraphDirection.TOP_TO_BOTTOM;
+
+  /** Number of pixels to use as a margin around the left and right of the graph. */
+  @Input() marginX: number = 0;
+
+  /** Number of pixels to use as a margin around the top and bottom of the graph. */
+  @Input() marginY: number = 0;
 
   /** Event emitted when centering the graph. */
   @Output() readonly onCenter: EventEmitter<void> = new EventEmitter();
@@ -74,7 +87,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   @ViewChildren('node') nodeElements: QueryList<ElementRef>;
   @ViewChildren('edge') edgeElements: QueryList<ElementRef>;
 
-  /** Dimensions of the container SVG view box. */
+  /** The dimensions of the container SVG view box. */
   private viewBox$: BehaviorSubject<ViewBox> = new BehaviorSubject({
     x: 0,
     y: 0,
@@ -104,7 +117,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     return this.edgeTemplate.inputEdges;
   }
 
-  /** Get the curve interpolation function for edge lines. */
+  /** The curve interpolation function for edge lines. */
   private get curveInterpolationFn() {
     return line<{ x; y }>()
       .x((d) => d.x)
@@ -131,8 +144,10 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
       this.center();
     }
 
+    const inputChanges$: Observable<void> = merge(this.edgeTemplate.onEdgeChanges$, this.nodeTemplate.onNodeChanges$);
+
     // Re-render the graph on any changes to nodes or edges.
-    merge(this.edgeTemplate.onEdgeChanges$, this.nodeTemplate.onNodeChanges$).subscribe(() => {
+    inputChanges$.subscribe(() => {
       this.renderGraph();
 
       if (this.centerOnChanges) {
@@ -213,11 +228,10 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   private createDagreGraph(): dagre.graphlib.Graph {
     const graph = new dagre.graphlib.Graph();
 
-    // TODO: Allow orientation and direction to be passed as inputs.
     graph.setGraph({
-      marginx: 0,
-      marginy: 0,
-      rankdir: 'TB',
+      marginx: this.marginX,
+      marginy: this.marginY,
+      rankdir: this.direction,
       align: 'UL',
     });
 
