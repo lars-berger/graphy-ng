@@ -16,24 +16,18 @@
         #node
       >
         <ng-container
-          *ngIf="nodeTemplate"
           [ngTemplateOutlet]="nodeTemplate.template"
           [ngTemplateOutletContext]="{ $implicit: node }"
         ></ng-container>
-
-        <svg:circle *ngIf="!nodeTemplate" r="10" [attr.cx]="defaultNodeSize / 2" [attr.cy]="defaultNodeSize / 2" />
       </svg:g>
     </svg:g>
 
     <svg:g class="edges-container">
       <svg:g *ngFor="let edge of transformedEdges; trackBy: trackById" class="edge" [id]="edge.id" #edge>
         <ng-container
-          *ngIf="edgeTemplate"
           [ngTemplateOutlet]="edgeTemplate.template"
           [ngTemplateOutletContext]="{ $implicit: edge }"
         ></ng-container>
-
-        <svg:path *ngIf="!edgeTemplate" class="edge" [attr.d]="edge.pathDefinition" />
       </svg:g>
     </svg:g>
   </svg:svg>

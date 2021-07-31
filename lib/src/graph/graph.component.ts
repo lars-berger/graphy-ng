@@ -85,7 +85,6 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   @ViewChild('graphContainer') graphContainer: ElementRef<SVGSVGElement>;
   @ViewChild('nodesContainer') nodesContainer: ElementRef<SVGSVGElement>;
   @ViewChildren('node') nodeElements: QueryList<ElementRef>;
-  @ViewChildren('edge') edgeElements: QueryList<ElementRef>;
 
   /** The dimensions of the container SVG view box. */
   private viewBox$: BehaviorSubject<ViewBox> = new BehaviorSubject({
@@ -117,9 +116,6 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     return this.edgeTemplate.inputEdges;
   }
 
-  /** Height/width of nodes if a custom template is not provided. */
-  readonly defaultNodeSize: number = 10;
-
   /** The curve interpolation function for edge lines. */
   private get curveInterpolationFn() {
     return line<{ x; y }>()
@@ -131,6 +127,10 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   constructor(private el: ElementRef<HTMLElement>, private cd: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
+    if (!this.edgeTemplate || !this.nodeTemplate) {
+      throw new Error('Templates for nodes and edges are required.');
+    }
+
     this.setInitialViewBox();
 
     this.renderGraph();
@@ -241,9 +241,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     // Default to assigning a new object as a label for each new edge.
     graph.setDefaultEdgeLabel(() => ({}));
 
-    if (this.nodeTemplate) {
-      this.renderNodesOffscreen();
-    }
+    this.renderNodesOffscreen();
 
     // The dimensions of every node needs to be known before passing it to the layout engine.
     for (let node of this.inputNodes) {
@@ -275,8 +273,8 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     // later provide that to the layout engine.
     this.transformedNodes = this.inputNodes.map((node) => ({
       id: node.id,
-      width: this.defaultNodeSize,
-      height: this.defaultNodeSize,
+      width: 1,
+      height: 1,
       x: 0,
       y: 0,
       transform: '',
@@ -291,11 +289,6 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
 
   /** Get the dimensions of a node element. */
   private getNodeDimensions(nodeId: string): Readonly<{ width: number; height: number }> {
-    // Nodes have a default width/height if a custom template isn't used.
-    if (!this.nodeTemplate) {
-      return { width: this.defaultNodeSize, height: this.defaultNodeSize };
-    }
-
     // Query the DOM for the rendered node element.
     const nodeEl: ElementRef<SVGSVGElement> = this.nodeElements.find((el) => el.nativeElement.id === nodeId);
 
