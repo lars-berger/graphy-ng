@@ -14,17 +14,18 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { curveBasis, CurveFactory, line } from 'd3-shape';
-import * as dagre from 'dagre';
+import dagre from 'dagre';
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
-import { GraphDirection } from './models/graph-direction.model';
 
+import { DefsTemplateDirective, EdgeTemplateDirective, NodeTemplateDirective } from './templates';
+import { GraphDirection } from './models/graph-direction.model';
+import { GraphOutputEdge, GraphOutputNode } from '../dagre-shims';
 import { InputEdge } from './models/input-edge.model';
 import { InputNode } from './models/input-node.model';
 import { TransformedEdge } from './models/transformed-edge.model';
 import { TransformedNode } from './models/transformed-node.model';
 import { ViewBox } from './models/view-box.model';
-import { DefsTemplateDirective, EdgeTemplateDirective, NodeTemplateDirective } from './templates';
 
 @Component({
   selector: 'lib-graph',
@@ -118,7 +119,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
 
   /** The curve interpolation function for edge lines. */
   private get curveInterpolationFn() {
-    return line<{ x; y }>()
+    return line<{ x: number; y: number }>()
       .x((d) => d.x)
       .y((d) => d.y)
       .curve(this.curve);
@@ -195,7 +196,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
 
     const { edges, nodes } = dagre.graphlib.json.write(graph);
 
-    this.transformedNodes = nodes.map((node) => {
+    this.transformedNodes = nodes.map((node: GraphOutputNode) => {
       const inputNode: InputNode<NData> = this.getInputNode(node.v);
       const { width, height, x, y } = node.value;
 
@@ -213,7 +214,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
       };
     });
 
-    this.transformedEdges = edges.map((edge) => {
+    this.transformedEdges = edges.map((edge: GraphOutputEdge) => {
       const inputEdge: InputEdge<EData> = this.getInputEdge(edge.v, edge.w);
 
       return {

@@ -2,43 +2,43 @@
  * Add type definition for `dagre.graphlib.json.write` method.
  */
 
-import * as dagre from 'dagre';
+import dagre from 'dagre';
+
+export interface GraphOutputNode {
+  v: string;
+  value: dagre.Node;
+}
+
+export interface GraphOutputEdge {
+  v: string;
+  w: string;
+  value: dagre.GraphEdge;
+}
+
+export interface GraphOutputOptions {
+  compound: boolean;
+  directed: boolean;
+  multigraph: boolean;
+}
+
+export interface GraphOutputValue {
+  align: string;
+  height: number;
+  marginx: number;
+  marginy: number;
+  rankdir: string;
+  width: number;
+}
+
+export interface GraphOutput {
+  nodes: GraphOutputNode[];
+  edges: GraphOutputEdge[];
+  options: GraphOutputOptions;
+  value: GraphOutputValue;
+}
 
 declare module 'dagre' {
   namespace graphlib {
-    interface GraphOutputNode {
-      v: string;
-      value: Node;
-    }
-
-    interface GraphOutputEdge {
-      v: string;
-      w: string;
-      value: GraphEdge;
-    }
-
-    interface GraphOutputOptions {
-      compound: boolean;
-      directed: boolean;
-      multigraph: boolean;
-    }
-
-    interface GraphOutputValue {
-      align: string;
-      height: number;
-      marginx: number;
-      marginy: number;
-      rankdir: string;
-      width: number;
-    }
-
-    interface GraphOutput {
-      nodes: GraphOutputNode[];
-      edges: GraphOutputEdge[];
-      options: GraphOutputOptions;
-      value: GraphOutputValue;
-    }
-
     namespace json {
       function write(graph: Graph): GraphOutput;
     }

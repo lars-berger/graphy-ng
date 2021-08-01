@@ -31,9 +31,9 @@ export class NodeTemplateDirective<T> {
   }
 
   static ngTemplateContextGuard<T>(
-    dir: NodeTemplateDirective<T>,
-    ctx: any,
-  ): ctx is NodeTemplateContext<T> {
+    _dir: NodeTemplateDirective<T>,
+    _ctx: unknown,
+  ): _ctx is NodeTemplateContext<T> {
     return true;
   }
 
@@ -58,9 +58,9 @@ export class EdgeTemplateDirective<T> {
   }
 
   static ngTemplateContextGuard<T>(
-    dir: EdgeTemplateDirective<T>,
-    ctx: unknown,
-  ): ctx is EdgeTemplateContext<T> {
+    _dir: EdgeTemplateDirective<T>,
+    _ctx: unknown,
+  ): _ctx is EdgeTemplateContext<T> {
     return true;
   }
 
