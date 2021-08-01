@@ -46,6 +46,9 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   /** The speed of zooming in/out, if enabled. */
   @Input() zoomSpeed: number = 0.1;
 
+  /** Whether to reverse the zoom direction. */
+  @Input() invertZoomDirection: boolean = false;
+
   /** Whether to center the graph on any input changes. */
   @Input() centerOnChanges: boolean = false;
 
@@ -410,9 +413,15 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
       // Prevent the page from scrolling as well.
       event.preventDefault();
 
+      const shouldZoomIn: boolean =
+        (event.deltaY < 0 && !this.invertZoomDirection) ||
+        (event.deltaY > 0 && this.invertZoomDirection);
+
       // Compute the zoom factor and zoom in/out accordingly.
-      const zoomDirection: number = event.deltaY < 0 ? 1 : -1;
-      const zoomFactor: number = Math.exp(zoomDirection * this.zoomSpeed);
+      const zoomFactor: number = shouldZoomIn
+        ? Math.exp(-this.zoomSpeed)
+        : Math.exp(this.zoomSpeed);
+
       this.zoom(zoomFactor);
 
       // Get the X and Y coordinates of the pointer position.
