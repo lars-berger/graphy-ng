@@ -95,12 +95,22 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   /** Subject that emits when the component has been destroyed. */
   private readonly onDestroy$: Subject<void> = new Subject();
 
+  /** The structural directive that holds the template for SVG defs. */
   @ContentChild(DefsTemplateDirective) readonly defsTemplate: DefsTemplateDirective;
+
+  /** The structural directive that holds the template for edges. */
   @ContentChild(EdgeTemplateDirective) readonly edgeTemplate: EdgeTemplateDirective<EData>;
+
+  /** The structural directive that holds the template for nodes. */
   @ContentChild(NodeTemplateDirective) readonly nodeTemplate: NodeTemplateDirective<NData>;
 
+  /** Reference to the SVG container element. */
   @ViewChild('graphContainer') private readonly graphContainer: ElementRef<SVGSVGElement>;
+
+  /** Reference to the nodes container element. */
   @ViewChild('nodesContainer') private readonly nodesContainer: ElementRef<SVGSVGElement>;
+
+  /** Reference to the individual node elements. */
   @ViewChildren('node') private readonly nodeElements: QueryList<ElementRef>;
 
   /** The dimensions of the container SVG view box. */
@@ -111,16 +121,20 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     height: 0,
   });
 
+  /** The current dimensions of the container SVG view box. */
   get viewBox(): ViewBox {
     return this.viewBox$.value;
   }
 
-  /** The SVG view box in a format that can be binded to in the template. */
+  /** The SVG view box in a format that can be bound to in the template. */
   readonly stringifiedViewBox$: Observable<string> = this.viewBox$.pipe(
     map((viewBox) => `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`),
   );
 
+  /** The array of nodes to display, along with additional layout information. */
   transformedNodes: TransformedNode<NData>[] = [];
+
+  /** The array of edges to display, along with additional layout information. */
   transformedEdges: TransformedEdge<EData>[] = [];
 
   /** The array of nodes to display in the graph. */
@@ -203,7 +217,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     });
   }
 
-  /** Render nodes and edges in the SVG viewbox. */
+  /** Render the input nodes and edges into the SVG container. */
   renderGraph(): void {
     const graph: dagre.graphlib.Graph = this.createDagreGraph();
 
@@ -244,10 +258,10 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
       };
     });
 
-    // Not sure why this is needed.
     this.cd.detectChanges();
   }
 
+  /** Create the Dagre graph object using the user-defined config, edges, and nodes. */
   private createDagreGraph(): dagre.graphlib.Graph {
     const graph = new dagre.graphlib.Graph();
 
@@ -263,8 +277,8 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
 
     this.renderNodesOffscreen();
 
-    // The dimensions of every node needs to be known before passing it to the layout engine.
     for (let node of this.inputNodes) {
+      // The dimensions of every node needs to be known before passing it to the layout engine.
       const { width, height } = this.getNodeDimensions(node.id);
 
       graph.setNode(node.id, { width, height });
@@ -287,10 +301,11 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     return this.inputEdges.find((edge) => edge.sourceId === sourceId && edge.targetId === targetId);
   }
 
+  /** Render nodes with `visibility: hidden` CSS attribute. */
   private renderNodesOffscreen(): void {
     // The node width, height, x, and y values provided here are completely arbitrary. The point
     // is to render the nodes in the DOM to see what width/height they will actually take up and
-    // later provide that to the layout engine.
+    // afterwards provide that to the layout engine.
     this.transformedNodes = this.inputNodes.map((node) => ({
       id: node.id,
       width: 1,
@@ -318,14 +333,14 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     return { width, height };
   }
 
+  /** Listen for zoom events and update the view box accordingly. */
   private registerZoomListener(): void {
-    // Get zoom events on the SVG element.
     const svg: SVGSVGElement = this.graphContainer.nativeElement;
-    const zoom$: Observable<WheelEvent> = fromEvent<WheelEvent>(svg, 'wheel').pipe(
-      takeUntil(this.onDestroy$),
-    );
 
-    zoom$.subscribe((event: WheelEvent) => {
+    // Get zoom events on the SVG container.
+    const zoom$: Observable<WheelEvent> = fromEvent<WheelEvent>(svg, 'wheel');
+
+    zoom$.pipe(takeUntil(this.onDestroy$)).subscribe((event: WheelEvent) => {
       // Prevent the page from scrolling as well.
       event.preventDefault();
 
@@ -344,10 +359,11 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     });
   }
 
+  /** Listen for panning events and update the view box accordingly. */
   private registerPanningListener(): void {
     const svg: SVGSVGElement = this.graphContainer.nativeElement;
 
-    // Get mouse events on the SVG element.
+    // Get mouse events on the SVG container.
     const pointerdown$: Observable<MouseEvent> = fromEvent<MouseEvent>(svg, 'pointerdown');
     const pointermove$: Observable<MouseEvent> = fromEvent<MouseEvent>(document, 'pointermove');
     const pointerup$: Observable<MouseEvent> = fromEvent<MouseEvent>(document, 'pointerup');
@@ -374,15 +390,14 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
           takeUntil(pointerup$),
         );
       }),
-      takeUntil(this.onDestroy$),
     );
 
-    pan$.subscribe(({ deltaX, deltaY }) => {
+    pan$.pipe(takeUntil(this.onDestroy$)).subscribe(({ deltaX, deltaY }) => {
       this.pan(deltaX, deltaY);
     });
   }
 
-  /** Get the X and Y coordinates from a MouseEvent in the SVG container. */
+  /** Get the X and Y coordinates from a `MouseEvent` in the SVG container. */
   private getPointFromEvent(event: MouseEvent): DOMPoint {
     const svg: SVGSVGElement = this.graphContainer.nativeElement;
 
@@ -391,12 +406,12 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     point.x = event.clientX;
     point.y = event.clientY;
 
-    // We get the current transformation matrix of the SVG and we inverse it.
+    // Convert a screen coordinate to an SVG coordinate.
     const invertedSVGMatrix: DOMMatrix = svg.getScreenCTM().inverse();
-
     return point.matrixTransform(invertedSVGMatrix);
   }
 
+  /** Pan horizontally and vertically by given pixel deltas. */
   pan(deltaX: number, deltaY: number): void {
     this.updateViewBox({
       x: this.viewBox.x - deltaX,
@@ -406,24 +421,28 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     this.onPan.emit();
   }
 
+  /** Pan horizontally by a given pixel delta. */
   panX(deltaX: number): void {
     this.updateViewBox({ x: this.viewBox.x - deltaX });
 
     this.onPan.emit();
   }
 
+  /** Pan vertically by a given pixel delta. */
   panY(deltaY: number): void {
     this.updateViewBox({ y: this.viewBox.y - deltaY });
 
     this.onPan.emit();
   }
 
+  /** Pan to a specific x, y coordinate. */
   panToCoordinates(x: number, y: number): void {
     this.updateViewBox({ x, y });
 
     this.onPan.emit();
   }
 
+  /** Zoom by a factor. */
   zoom(factor: number): void {
     this.updateViewBox({
       width: this.viewBox.width * factor,
@@ -433,25 +452,24 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     this.onZoom.emit();
   }
 
+  /** Pan to get the center point of the nodes in the middle of the view box. */
   center(): void {
+    // Get the center coordinates of the rendered nodes.
     const boundingBox: DOMRect = this.nodesContainer.nativeElement.getBBox();
-
     const centerX: number = (boundingBox.x + boundingBox.width) / 2;
     const centerY: number = (boundingBox.y + boundingBox.height) / 2;
 
+    // Get the center coordinates of the SVG view box.
     const viewBoxCenterX: number = this.viewBox.width / 2;
     const viewBoxCenterY: number = this.viewBox.height / 2;
 
-    // Pan to get the center point of the nodes in the middle of the view box.
     this.panToCoordinates(centerX - viewBoxCenterX, centerY - viewBoxCenterY);
 
     this.onCenter.emit();
-
-    // Not sure why this is needed.
     this.cd.detectChanges();
   }
 
-  /** Tracking for nodes and edges. */
+  /** Tracking function for nodes and edges. */
   trackById(_index: number, object: any): string {
     return object.id;
   }
