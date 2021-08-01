@@ -13,7 +13,7 @@ import {
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
-import { curveBasis, CurveFactory, line } from 'd3-shape';
+import { curveBasis, CurveFactory, Line, line } from 'd3-shape';
 import dagre from 'dagre';
 import { BehaviorSubject, fromEvent, merge, Observable, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
@@ -118,7 +118,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
 
   /** The curve interpolation function for edge lines. */
-  private get curveInterpolationFn() {
+  private get curveInterpolationFn(): Line<{ x: number; y: number }> {
     return line<{ x: number; y: number }>()
       .x((d) => d.x)
       .y((d) => d.y)
@@ -188,7 +188,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
 
   /** Render nodes and edges in the SVG viewbox. */
-  renderGraph() {
+  renderGraph(): void {
     const graph: dagre.graphlib.Graph = this.createDagreGraph();
 
     // Update edges and nodes with layout information.
@@ -262,16 +262,16 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
 
   /** Get an input node by its ID. */
-  private getInputNode(id: string) {
+  private getInputNode(id: string): InputNode<NData> {
     return this.inputNodes.find((node) => node.id === id);
   }
 
   /** Get an input edge by its source ID and target ID. */
-  private getInputEdge(sourceId: string, targetId: string) {
+  private getInputEdge(sourceId: string, targetId: string): InputEdge<EData> {
     return this.inputEdges.find((edge) => edge.sourceId === sourceId && edge.targetId === targetId);
   }
 
-  private renderNodesOffscreen() {
+  private renderNodesOffscreen(): void {
     // The node width, height, x, and y values provided here are completely arbitrary. The point
     // is to render the nodes in the DOM to see what width/height they will actually take up and
     // later provide that to the layout engine.
@@ -302,7 +302,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     return { width, height };
   }
 
-  private registerZoomListener() {
+  private registerZoomListener(): void {
     // Get zoom events on the SVG element.
     const svg: SVGSVGElement = this.graphContainer.nativeElement;
     const zoom$: Observable<WheelEvent> = fromEvent<WheelEvent>(svg, 'wheel').pipe(
@@ -328,7 +328,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     });
   }
 
-  private registerPanningListener() {
+  private registerPanningListener(): void {
     const svg: SVGSVGElement = this.graphContainer.nativeElement;
 
     // Get mouse events on the SVG element.
@@ -367,7 +367,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
 
   /** Get the X and Y coordinates from a MouseEvent in the SVG container. */
-  private getPointFromEvent(event: MouseEvent) {
+  private getPointFromEvent(event: MouseEvent): DOMPoint {
     const svg: SVGSVGElement = this.graphContainer.nativeElement;
 
     // Create an SVG point.
@@ -381,27 +381,27 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     return point.matrixTransform(invertedSVGMatrix);
   }
 
-  pan(deltaX: number, deltaY: number) {
+  pan(deltaX: number, deltaY: number): void {
     this.panX(deltaX);
     this.panY(deltaY);
   }
 
-  panX(deltaX: number) {
+  panX(deltaX: number): void {
     this.updateViewBox({ x: this.viewBox.x - deltaX });
     this.onPan.emit();
   }
 
-  panY(deltaY: number) {
+  panY(deltaY: number): void {
     this.updateViewBox({ y: this.viewBox.y - deltaY });
     this.onPan.emit();
   }
 
-  panToCoordinates(x: number, y: number) {
+  panToCoordinates(x: number, y: number): void {
     this.updateViewBox({ x, y });
     this.onPan.emit();
   }
 
-  zoom(factor: number) {
+  zoom(factor: number): void {
     this.updateViewBox({
       width: this.viewBox.width * factor,
       height: this.viewBox.height * factor,
@@ -410,7 +410,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     this.onZoom.emit();
   }
 
-  center() {
+  center(): void {
     const boundingBox: DOMRect = this.nodesContainer.nativeElement.getBBox();
 
     const centerX: number = (boundingBox.x + boundingBox.width) / 2;
