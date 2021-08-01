@@ -213,12 +213,12 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
 
       return {
         id: inputNode.id,
-        width: width,
-        height: height,
-        x: x,
-        y: y,
-        transform: `translate(${x - width / 2}, ${y - height / 2})`,
-        isVisible: true,
+        _width: width,
+        _height: height,
+        _x: x,
+        _y: y,
+        _transform: `translate(${x - width / 2}, ${y - height / 2})`,
+        _isVisible: true,
         data: {
           ...inputNode.data,
         },
@@ -374,12 +374,12 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     // afterwards provide that to the layout engine.
     this.transformedNodes = this._inputNodes.map((node) => ({
       id: node.id,
-      width: 1,
-      height: 1,
-      x: 0,
-      y: 0,
-      transform: '',
-      isVisible: false,
+      _width: 1,
+      _height: 1,
+      _x: 0,
+      _y: 0,
+      _transform: '',
+      _isVisible: false,
       data: {
         ...node.data,
       },

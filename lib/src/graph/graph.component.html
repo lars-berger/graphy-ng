@@ -14,8 +14,8 @@
         *ngFor="let node of transformedNodes; trackBy: _trackById"
         class="node"
         [id]="node.id"
-        [class.is-visible]="node.isVisible"
-        [attr.transform]="node.transform"
+        [class.is-visible]="node._isVisible"
+        [attr.transform]="node._transform"
         #node
       >
         <ng-container
