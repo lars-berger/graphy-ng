@@ -382,22 +382,29 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
 
   pan(deltaX: number, deltaY: number): void {
-    this.panX(deltaX);
-    this.panY(deltaY);
+    this.updateViewBox({
+      x: this.viewBox.x - deltaX,
+      y: this.viewBox.y - deltaY,
+    });
+
+    this.onPan.emit();
   }
 
   panX(deltaX: number): void {
     this.updateViewBox({ x: this.viewBox.x - deltaX });
+
     this.onPan.emit();
   }
 
   panY(deltaY: number): void {
     this.updateViewBox({ y: this.viewBox.y - deltaY });
+
     this.onPan.emit();
   }
 
   panToCoordinates(x: number, y: number): void {
     this.updateViewBox({ x, y });
+
     this.onPan.emit();
   }
 
