@@ -79,13 +79,13 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   /** Subject that emits when the component has been destroyed. */
   private readonly onDestroy$: Subject<void> = new Subject();
 
-  @ContentChild(DefsTemplateDirective) defsTemplate: DefsTemplateDirective;
-  @ContentChild(EdgeTemplateDirective) edgeTemplate: EdgeTemplateDirective<EData>;
-  @ContentChild(NodeTemplateDirective) nodeTemplate: NodeTemplateDirective<NData>;
+  @ContentChild(DefsTemplateDirective) readonly defsTemplate: DefsTemplateDirective;
+  @ContentChild(EdgeTemplateDirective) readonly edgeTemplate: EdgeTemplateDirective<EData>;
+  @ContentChild(NodeTemplateDirective) readonly nodeTemplate: NodeTemplateDirective<NData>;
 
-  @ViewChild('graphContainer') graphContainer: ElementRef<SVGSVGElement>;
-  @ViewChild('nodesContainer') nodesContainer: ElementRef<SVGSVGElement>;
-  @ViewChildren('node') nodeElements: QueryList<ElementRef>;
+  @ViewChild('graphContainer') private readonly graphContainer: ElementRef<SVGSVGElement>;
+  @ViewChild('nodesContainer') private readonly nodesContainer: ElementRef<SVGSVGElement>;
+  @ViewChildren('node') private readonly nodeElements: QueryList<ElementRef>;
 
   /** The dimensions of the container SVG view box. */
   private viewBox$: BehaviorSubject<ViewBox> = new BehaviorSubject({
@@ -100,7 +100,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
 
   /** The SVG view box in a format that can be binded to in the template. */
-  stringifiedViewBox$: Observable<string> = this.viewBox$.pipe(
+  readonly stringifiedViewBox$: Observable<string> = this.viewBox$.pipe(
     map((viewBox) => `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`),
   );
 
@@ -167,7 +167,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     this.onDestroy$.next();
   }
 
-  updateViewBox(viewBox: Partial<ViewBox>): void {
+  private updateViewBox(viewBox: Partial<ViewBox>): void {
     this.viewBox$.next({
       ...this.viewBox$.value,
       ...viewBox,
