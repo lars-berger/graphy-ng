@@ -5,7 +5,12 @@ import { GraphComponent } from './graph.component';
 import { DefsTemplateDirective, EdgeTemplateDirective, NodeTemplateDirective } from './templates';
 
 @NgModule({
-  declarations: [DefsTemplateDirective, EdgeTemplateDirective, GraphComponent, NodeTemplateDirective],
+  declarations: [
+    DefsTemplateDirective,
+    EdgeTemplateDirective,
+    GraphComponent,
+    NodeTemplateDirective,
+  ],
   imports: [CommonModule],
   exports: [DefsTemplateDirective, EdgeTemplateDirective, GraphComponent, NodeTemplateDirective],
 })

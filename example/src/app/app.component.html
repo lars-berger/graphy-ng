@@ -6,7 +6,9 @@
 
       <input class="create-node-form__input" formControlName="title" placeholder="Title" />
 
-      <button class="create-node-form__submit-btn" lib-button (click)="createNode()">Create node</button>
+      <button class="create-node-form__submit-btn" lib-button (click)="createNode()">
+        Create node
+      </button>
     </form>
 
     <form class="create-edge-form" [formGroup]="createEdgeForm">
@@ -22,14 +24,20 @@
       </select>
 
       <label>Target Node</label>
-      <select class="create-edge-form__select" formControlName="targetId" placeholder="Select a node">
+      <select
+        class="create-edge-form__select"
+        formControlName="targetId"
+        placeholder="Select a node"
+      >
         <option value="" selected disabled>Select a node</option>
         <option *ngFor="let node of nodes" [value]="node.id">
           {{ node.data?.title }}
         </option>
       </select>
 
-      <button class="create-edge-form__submit-btn" lib-button (click)="createEdge()">Create edge</button>
+      <button class="create-edge-form__submit-btn" lib-button (click)="createEdge()">
+        Create edge
+      </button>
     </form>
 
     <form class="update-node-form" [formGroup]="updateNodeForm" *ngIf="nodeIdToUpdate">
@@ -38,11 +46,13 @@
 
       <input class="update-node-form__input" formControlName="title" placeholder="Title" />
 
-      <button class="update-node-form__submit-btn" lib-button (click)="updateNode()">Update node</button>
+      <button class="update-node-form__submit-btn" lib-button (click)="updateNode()">
+        Update node
+      </button>
     </form>
   </div>
 
-  <lib-graph>
+  <lib-graph [centerOnChanges]="true">
     <ng-container *defsTemplate>
       <svg:marker
         class="arrow"
@@ -59,7 +69,12 @@
     </ng-container>
 
     <ng-container *nodeTemplate="let node; nodes: nodes">
-      <svg:g xmlns="http://www.w3.org/2000/xhtml" width="400" height="80" (click)="showNodeUpdateForm(node.id)">
+      <svg:g
+        xmlns="http://www.w3.org/2000/xhtml"
+        width="400"
+        height="80"
+        (click)="showNodeUpdateForm(node.id)"
+      >
         <svg:foreignObject width="400" height="80">
           <xhtml:div class="node" xmlns="http://www.w3.org/1999/xhtml">
             <p class="node__title">{{ node.data.title }}</p>
@@ -70,7 +85,11 @@
 
     <ng-container *edgeTemplate="let edge; edges: edges">
       <svg:g class="edge">
-        <svg:path class="edge__line" marker-end="url(#arrow)" [attr.d]="edge.pathDefinition"></svg:path>
+        <svg:path
+          class="edge__line"
+          marker-end="url(#arrow)"
+          [attr.d]="edge.pathDefinition"
+        ></svg:path>
       </svg:g>
     </ng-container>
   </lib-graph>

@@ -147,7 +147,10 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
       this.center();
     }
 
-    const inputChanges$: Observable<void> = merge(this.edgeTemplate.onEdgeChanges$, this.nodeTemplate.onNodeChanges$);
+    const inputChanges$: Observable<void> = merge(
+      this.edgeTemplate.onEdgeChanges$,
+      this.nodeTemplate.onNodeChanges$,
+    );
 
     // Re-render the graph on any changes to nodes or edges.
     inputChanges$.subscribe(() => {
@@ -290,7 +293,9 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   /** Get the dimensions of a node element. */
   private getNodeDimensions(nodeId: string): Readonly<{ width: number; height: number }> {
     // Query the DOM for the rendered node element.
-    const nodeEl: ElementRef<SVGSVGElement> = this.nodeElements.find((el) => el.nativeElement.id === nodeId);
+    const nodeEl: ElementRef<SVGSVGElement> = this.nodeElements.find(
+      (el) => el.nativeElement.id === nodeId,
+    );
 
     const { width, height } = nodeEl.nativeElement.getBBox();
     return { width, height };
@@ -299,7 +304,9 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   private registerZoomListener() {
     // Get zoom events on the SVG element.
     const svg: SVGSVGElement = this.graphContainer.nativeElement;
-    const zoom$: Observable<WheelEvent> = fromEvent<WheelEvent>(svg, 'wheel').pipe(takeUntil(this.onDestroy$));
+    const zoom$: Observable<WheelEvent> = fromEvent<WheelEvent>(svg, 'wheel').pipe(
+      takeUntil(this.onDestroy$),
+    );
 
     zoom$.subscribe((event: WheelEvent) => {
       // Prevent the page from scrolling as well.
@@ -394,7 +401,11 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
 
   zoom(factor: number) {
-    this.updateViewBox({ width: this.viewBox.width * factor, height: this.viewBox.height * factor });
+    this.updateViewBox({
+      width: this.viewBox.width * factor,
+      height: this.viewBox.height * factor,
+    });
+
     this.onZoom.emit();
   }
 

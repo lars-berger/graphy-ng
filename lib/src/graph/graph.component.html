@@ -23,7 +23,12 @@
     </svg:g>
 
     <svg:g class="edges-container">
-      <svg:g *ngFor="let edge of transformedEdges; trackBy: trackById" class="edge" [id]="edge.id" #edge>
+      <svg:g
+        *ngFor="let edge of transformedEdges; trackBy: trackById"
+        class="edge"
+        [id]="edge.id"
+        #edge
+      >
         <ng-container
           [ngTemplateOutlet]="edgeTemplate.template"
           [ngTemplateOutletContext]="{ $implicit: edge }"
