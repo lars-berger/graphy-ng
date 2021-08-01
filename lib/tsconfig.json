@@ -3,12 +3,10 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "baseUrl": "./src",
-    "target": "es2015",
     "module": "esnext",
     "declaration": true,
     "inlineSources": true,
-    "types": ["node"],
-    "lib": ["dom", "es2018"]
+    "types": ["node"]
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
@@ -17,5 +15,6 @@
     "enableResourceInlining": true,
     "enableIvy": true
   },
+  "include": ["src/**/*"],
   "exclude": ["src/test.ts", "**/*.spec.ts"]
 }
