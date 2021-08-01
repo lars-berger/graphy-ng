@@ -50,10 +50,26 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   @Input() centerOnChanges: boolean = false;
 
   /** The width of the graph (eg. '600px'). */
-  @Input() width: string = '100%';
+  @Input()
+  get width(): string {
+    return this._width;
+  }
+  set width(value: string) {
+    this._width = value;
+    this.resetViewBoxDimensions();
+  }
+  _width = '100%';
 
   /** The height of the graph (eg. '600px'). */
-  @Input() height: string = '100%';
+  @Input()
+  get height(): string {
+    return this._height;
+  }
+  set height(value: string) {
+    this._height = value;
+    this.resetViewBoxDimensions();
+  }
+  _height = '100%';
 
   /**
    * The direction of the graph layout. For example, using `GraphOrientation.LEFT_TO_RIGHT` in an
@@ -132,7 +148,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
       throw new Error('Templates for nodes and edges are required.');
     }
 
-    this.setInitialViewBox();
+    this.resetViewBoxDimensions();
 
     this.renderGraph();
 
@@ -144,6 +160,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
       this.registerPanningListener();
     }
 
+    // TODO: Add a subject for when graph is initially rendered or re-rendered.
     if (this.centerOnChanges) {
       this.center();
     }
@@ -174,14 +191,13 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
     });
   }
 
-  private setInitialViewBox(): void {
+  /** Set width/height of the view box container to match the dimensions of the host element. */
+  private resetViewBoxDimensions(): void {
     // Get the container dimensions.
     const hostEl: HTMLElement = this.el.nativeElement;
     const hostDimensions: DOMRect = hostEl.getBoundingClientRect();
 
     this.updateViewBox({
-      x: 0,
-      y: 0,
       width: hostDimensions.width,
       height: hostDimensions.height,
     });

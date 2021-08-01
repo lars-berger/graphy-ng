@@ -1,4 +1,4 @@
-<div class="graph" [attr.width]="width" [attr.height]="height">
+<div class="graph" [style.width]="width" [style.height]="height">
   <svg:svg class="graph-container" [attr.viewBox]="stringifiedViewBox$ | async" #graphContainer>
     <defs class="defs">
       <ng-container *ngIf="defsTemplate" [ngTemplateOutlet]="defsTemplate.template"></ng-container>
