@@ -18,11 +18,29 @@ body {
   box-sizing: inherit;
 }
 
+label {
+  color: $gray-400;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-weight: 600;
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+
 button {
+  font-family: inherit;
   background-color: $blue;
   border: none;
   padding: 0.7rem 1.4rem;
   border-radius: 4px;
-  color: $gray-100;
+  color: rgba($white, 0.9);
   font-weight: 700;
+}
+
+input,
+select {
+  font-family: inherit;
+  border-radius: 3px;
+  border: 1px solid $gray-400;
+  padding: 0.4rem 0.6rem;
 }
