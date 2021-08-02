@@ -6,7 +6,7 @@
       <label>Node title</label>
       <input class="create-node-form__input" formControlName="title" />
 
-      <button class="create-node-form__submit-btn" lib-button (click)="createNode()">
+      <button class="create-node-form__submit-btn" lib-button (click)="submitCreateNodeForm()">
         Create node
       </button>
     </form>
@@ -36,7 +36,7 @@
         </option>
       </select>
 
-      <button class="create-edge-form__submit-btn" lib-button (click)="createEdge()">
+      <button class="create-edge-form__submit-btn" lib-button (click)="submitCreateEdgeForm()">
         Create edge
       </button>
     </form>
@@ -49,7 +49,7 @@
       <label>Node title</label>
       <input class="update-node-form__input" formControlName="title" />
 
-      <button class="update-node-form__submit-btn" lib-button (click)="updateNode()">
+      <button class="update-node-form__submit-btn" lib-button (click)="submitUpdateNodeForm()">
         Update node
       </button>
     </form>

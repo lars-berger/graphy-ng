@@ -52,45 +52,67 @@ export class AppComponent {
 
   constructor(private fb: FormBuilder) {}
 
-  createNode(): void {
+  submitCreateNodeForm(): void {
     const { title } = this.createNodeForm.value;
 
     if (title === '') {
       return;
     }
 
-    this.nodes = [...this.nodes, { id: this.createNodeId(), data: { title } }];
+    this.createNode(title);
     this.createNodeForm.reset();
   }
 
-  createEdge(): void {
+  createNode(title: string): InputNode<NodeData> {
+    const newNode = { id: this.createNodeId(), data: { title } };
+
+    this.nodes = [...this.nodes, newNode];
+
+    return newNode;
+  }
+
+  submitCreateEdgeForm(): void {
     const { sourceId, targetId } = this.createEdgeForm.value;
 
     if (sourceId === targetId) {
       return;
     }
 
-    this.edges = [...this.edges, this.createEdgeForm.value];
+    this.createEdge(sourceId, targetId);
     this.createEdgeForm.reset();
   }
 
-  updateNode(): void {
+  createEdge(sourceId: string, targetId: string): InputEdge {
+    const newEdge = { sourceId, targetId };
+
+    this.edges = [...this.edges, newEdge];
+
+    return newEdge;
+  }
+
+  submitUpdateNodeForm(): void {
     const { title } = this.updateNodeForm.value;
 
     if (title === '') {
       return;
     }
 
+    this.updateNode(this.nodeIdToUpdate!, title);
+    this.updateNodeForm.reset();
+  }
+
+  updateNode(nodeId: string, title: string): InputNode<NodeData> {
     this.nodes = this.nodes.map((node) => {
-      if (node.id !== this.nodeIdToUpdate) {
+      if (node.id !== nodeId) {
         return node;
       }
 
-      return { id: node.id, data: { title } };
+      return { ...node, data: { title } };
     });
 
-    this.updateNodeForm.reset();
     this.nodeIdToUpdate = null;
+
+    return this.nodes.find((node) => node.id === nodeId)!;
   }
 
   showNodeUpdateForm(nodeId: string): void {
