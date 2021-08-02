@@ -43,7 +43,7 @@
 
     <div class="actions-sidebar__divider"></div>
 
-    <form class="update-node-form" [formGroup]="updateNodeForm" *ngIf="nodeIdToUpdate">
+    <form class="update-node-form" [formGroup]="updateNodeForm" *ngIf="showUpdateForm">
       <h2 class="update-node-form__heading">Update a node</h2>
 
       <label>Node title</label>

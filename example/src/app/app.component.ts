@@ -25,9 +25,10 @@ export class AppComponent implements OnInit {
     targetId: ['', Validators.required],
   });
 
-  nodeIdToUpdate: string | null = null;
+  showUpdateForm: boolean = false;
 
   updateNodeForm: FormGroup = this.fb.group({
+    id: ['', Validators.required],
     title: ['', Validators.required],
   });
 
@@ -79,13 +80,13 @@ export class AppComponent implements OnInit {
   }
 
   submitUpdateNodeForm(): void {
-    const { title } = this.updateNodeForm.value;
+    const { id, title } = this.updateNodeForm.value;
 
     if (title === '') {
       return;
     }
 
-    this.updateNode(this.nodeIdToUpdate!, title);
+    this.updateNode(id, title);
     this.updateNodeForm.reset();
   }
 
@@ -98,17 +99,17 @@ export class AppComponent implements OnInit {
       return { ...node, data: { title } };
     });
 
-    this.nodeIdToUpdate = null;
+    this.showUpdateForm = false;
 
     return this.nodes.find((node) => node.id === nodeId)!;
   }
 
   showNodeUpdateForm(nodeId: string): void {
-    this.nodeIdToUpdate = nodeId;
-
     // Fill the update form with the existing title.
     const nodeToUpdate = this.nodes.find((node) => node.id === nodeId);
-    this.updateNodeForm.setValue({ title: nodeToUpdate?.data?.title });
+    this.updateNodeForm.setValue({ id: nodeId, title: nodeToUpdate?.data?.title });
+
+    this.showUpdateForm = true;
   }
 
   /**
