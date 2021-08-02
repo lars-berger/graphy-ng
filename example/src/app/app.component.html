@@ -80,7 +80,10 @@
       >
         <svg:foreignObject width="400" height="80">
           <xhtml:div class="node" xmlns="http://www.w3.org/1999/xhtml">
-            <p class="node__title">{{ node.data.title }}</p>
+            <div class="node__content">
+              <p class="node__content__title">{{ node.data.title }}</p>
+              <small class="node__content__id">Node ID: {{ node.id }}</small>
+            </div>
           </xhtml:div>
         </svg:foreignObject>
       </svg:g>

@@ -12,6 +12,7 @@
 .actions-sidebar {
   padding: 1.8rem;
   background-color: $white;
+  border-right: 1px solid $gray-200;
 
   &__divider {
     height: 1px;
@@ -57,16 +58,26 @@
   transition: border 0.2s ease;
   font-weight: 600;
 
-  &__title {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
   &:hover,
   &:focus {
     cursor: pointer;
     border: 1px solid $blue;
+  }
+
+  &__content {
+    &__title {
+      display: block;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      margin: 0.5rem 0;
+    }
+
+    &__id {
+      display: block;
+      font-weight: 500;
+      color: $gray-400;
+    }
   }
 }
 
