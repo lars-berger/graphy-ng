@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { InputEdge, InputNode } from 'graphy-ng';
 
@@ -11,29 +11,10 @@ interface NodeData {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  nodes: InputNode<NodeData>[] = [
-    {
-      id: '1',
-      data: {
-        title: 'Hello',
-      },
-    },
-    {
-      id: '2',
-      data: {
-        title: 'World',
-      },
-    },
-  ];
+export class AppComponent implements OnInit {
+  nodes: InputNode<NodeData>[] = [];
 
-  edges: InputEdge[] = [
-    {
-      id: '1',
-      sourceId: '1',
-      targetId: '2',
-    },
-  ];
+  edges: InputEdge[] = [];
 
   createNodeForm: FormGroup = this.fb.group({
     title: ['', Validators.required],
@@ -51,6 +32,13 @@ export class AppComponent {
   });
 
   constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    const node1 = this.createNode('Hello');
+    const node2 = this.createNode('World');
+
+    this.createEdge(node1.id, node2.id);
+  }
 
   submitCreateNodeForm(): void {
     const { title } = this.createNodeForm.value;
