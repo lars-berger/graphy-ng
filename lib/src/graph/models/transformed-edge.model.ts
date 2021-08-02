@@ -1,6 +1,6 @@
 export interface TransformedEdge<T = {}> {
   /** The unique identifier of the edge. */
-  id: string;
+  id?: string;
 
   /** The ID of the node to point from. */
   sourceId: string;
