@@ -12,6 +12,17 @@
 .actions-sidebar {
   padding: 1.8rem;
   background-color: $white;
+
+  &__divider {
+    height: 1px;
+    background-color: $gray-200;
+    margin-bottom: 1.5rem;
+    width: 100%;
+
+    &:last-child {
+      display: none;
+    }
+  }
 }
 
 .create-node-form,
@@ -19,13 +30,7 @@
 .update-node-form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.5rem;
-
-  &__divider {
-    height: 1px;
-    background-color: $gray-500;
-    margin-bottom: 1.5rem;
-  }
+  margin-bottom: 0.5rem;
 
   &__select,
   &__input {
@@ -35,6 +40,10 @@
   &__submit-btn {
     margin-bottom: 2rem;
   }
+}
+
+.create-node-form__heading {
+  margin-top: 0;
 }
 
 .node {
