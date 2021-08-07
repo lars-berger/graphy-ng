@@ -6,7 +6,7 @@ sidebar_position: 1
 
 `graphy-ng` is a renderer for directed graphs in Angular. Under the hood, [Dagre](https://github.com/dagrejs/dagre) is used as a layout engine and the graph is rendered using SVGs.
 
-**`graphy-ng` is an Ivy library and requires Angular 12+**
+**The library is compiled with Ivy and requires Angular 12+**
 
 ## Installation
 
@@ -93,7 +93,7 @@ export class HelloComponent {
 - Significantly more light-weight. About a `200kb`/`2mb` decrease in production/development bundle sizes respectively (about a **XX% overall decrease** in a fresh Angular app).
 - Input nodes and edges are not modified by the library.
 - Avoids requiring certain CSS classes to be hard-coded when using custom templates.
-- Improved TypeScript typings when using custom templates.
+- Full TypeScript support when using custom templates.
 
 **Cons:**
 

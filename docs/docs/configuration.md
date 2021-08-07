@@ -8,11 +8,13 @@ sidebar_position: 2
 
 ## Custom templates
 
-`graphy-ng` allows for custom templates for nodes, edges, and SVG defs to allow for complete customization of the appearance and behavior of your graph.
+The appearance and behavior of your graph is customizable with custom templates for nodes, edges, and SVG defs. Node and edge templates are required.
 
 ### Defs template
 
 The defs template can be used to define SVG objects that will be consumed by the node or edge templates. In the example below, an SVG of an arrow is defined, which can then be referenced by its `id` in the edge template.
+
+Not required if no defs are needed for the node or edge templates.
 
 ```html
 <ng-container *defsTemplate>
@@ -32,6 +34,8 @@ The defs template can be used to define SVG objects that will be consumed by the
 
 ### Edge template
 
+The edge template is used for rendering the edges between nodes and exposes the `edge` template variable.
+
 ```html
 <ng-container *edgeTemplate="let edge; edges: edges">
   <svg:path marker-end="url(#arrow)" [attr.d]="edge.pathDefinition"></svg:path>
@@ -40,7 +44,7 @@ The defs template can be used to define SVG objects that will be consumed by the
 
 #### Edge template inputs
 
-Inputs that can be passed to the `*edgeTemplate` structural directive.
+Inputs that can be passed to the `*edgeTemplate` structural directive:
 
 | Name  | Type          | Default | Description                                 |
 | ----- | ------------- | ------- | ------------------------------------------- |
@@ -48,7 +52,7 @@ Inputs that can be passed to the `*edgeTemplate` structural directive.
 
 #### Edge template context
 
-Properties defined on the `edge` template variable of type `EdgeContext<E>`.
+Properties defined on the `edge` template variable of type `EdgeContext<E>`:
 
 | Name           | Type     | Description                                                                        |
 | -------------- | -------- | ---------------------------------------------------------------------------------- |
@@ -60,6 +64,8 @@ Properties defined on the `edge` template variable of type `EdgeContext<E>`.
 
 ### Node template
 
+The node template is used for rendering the nodes and exposes the `node` template variable.
+
 ```html
 <ng-container *nodeTemplate="let node; nodes: nodes">
   <svg:circle cx="25" cy="25" r="25" />
@@ -69,7 +75,7 @@ Properties defined on the `edge` template variable of type `EdgeContext<E>`.
 
 #### Node template inputs
 
-Inputs that can be passed to the `*nodeTemplate` structural directive.
+Inputs that can be passed to the `*nodeTemplate` structural directive:
 
 | Name  | Type          | Default | Description                                 |
 | ----- | ------------- | ------- | ------------------------------------------- |
@@ -77,7 +83,7 @@ Inputs that can be passed to the `*nodeTemplate` structural directive.
 
 #### Node template context
 
-Properties defined on the `node` template variable of type `NodeContext<N>`.
+Properties defined on the `node` template variable of type `NodeContext<N>`:
 
 | Name | Type     | Description                        |
 | ---- | -------- | ---------------------------------- |
@@ -106,7 +112,7 @@ Inputs that can be passed to the `lib-graph` component:
 
 ### Outputs
 
-Outputs emitted by the `lib-graph` component.
+Outputs emitted by the `lib-graph` component:
 
 | Name     | Type   | Description                                     |
 | -------- | ------ | ----------------------------------------------- |
@@ -116,7 +122,7 @@ Outputs emitted by the `lib-graph` component.
 
 ## Graph methods
 
-Methods that can be called on the `lib-graph` component, eg. through the use of `@ViewChild(GraphComponent)`.
+Methods that can be called on the `lib-graph` component, eg. through the use of `@ViewChild(GraphComponent)`:
 
 - #### `pan(deltaX: number, deltaY: number): void`
 
