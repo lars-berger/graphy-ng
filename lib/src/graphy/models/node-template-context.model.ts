@@ -1,8 +1,8 @@
 import { TransformedNode } from './transformed-node.model';
 
-export type NodeContext<T> = Pick<TransformedNode<T>, 'id' | 'data'>;
+export type NodeContext<N> = Pick<TransformedNode<N>, 'id' | 'data'>;
 
 /** The context object passed to node templates. */
-export interface NodeTemplateContext<T> {
-  $implicit: NodeContext<T>;
+export interface NodeTemplateContext<N> {
+  $implicit: NodeContext<N>;
 }

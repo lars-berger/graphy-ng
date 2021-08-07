@@ -1,4 +1,4 @@
-export interface TransformedNode<T = {}> {
+export interface TransformedNode<N = {}> {
   /** The unique identifier of the node. */
   id: string;
 
@@ -24,5 +24,5 @@ export interface TransformedNode<T = {}> {
   _isVisible: boolean;
 
   /** The data associated with a node. */
-  data: T;
+  data: N;
 }

@@ -1,4 +1,4 @@
-export interface InputEdge<T = void> {
+export interface InputEdge<E = void> {
   /** The unique identifier of the edge. */
   id?: string;
 
@@ -9,5 +9,5 @@ export interface InputEdge<T = void> {
   targetId: string;
 
   /** The data associated with an edge. */
-  data?: T;
+  data?: E;
 }

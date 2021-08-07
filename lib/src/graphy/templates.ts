@@ -16,25 +16,25 @@ export class DefsTemplateDirective {
 @Directive({
   selector: '[nodeTemplate]',
 })
-export class NodeTemplateDirective<T> {
+export class NodeTemplateDirective<N> {
   /** Subject that emits when input nodes are mutated. */
   readonly _onNodeChanges$: Subject<void> = new Subject();
 
   /** The array of nodes to display in the graph. */
   @Input('nodeTemplateNodes')
-  get inputNodes(): InputNode<T>[] {
+  get inputNodes(): InputNode<N>[] {
     return this._inputNodes;
   }
-  set inputNodes(value: InputNode<T>[]) {
+  set inputNodes(value: InputNode<N>[]) {
     this._inputNodes = value;
     this._onNodeChanges$.next();
   }
-  _inputNodes: InputNode<T>[] = [];
+  _inputNodes: InputNode<N>[] = [];
 
-  static ngTemplateContextGuard<T>(
-    _dir: NodeTemplateDirective<T>,
+  static ngTemplateContextGuard<N>(
+    _dir: NodeTemplateDirective<N>,
     _ctx: unknown,
-  ): _ctx is NodeTemplateContext<T> {
+  ): _ctx is NodeTemplateContext<N> {
     return true;
   }
 
@@ -44,25 +44,25 @@ export class NodeTemplateDirective<T> {
 @Directive({
   selector: '[edgeTemplate]',
 })
-export class EdgeTemplateDirective<T> {
+export class EdgeTemplateDirective<E> {
   /** Subject that emits when input edges are mutated. */
   readonly _onEdgeChanges$: Subject<void> = new Subject();
 
   /** The array of edges to display in the graph. */
   @Input('edgeTemplateEdges')
-  get inputEdges(): InputEdge<T>[] {
+  get inputEdges(): InputEdge<E>[] {
     return this._inputEdges;
   }
-  set inputEdges(value: InputEdge<T>[]) {
+  set inputEdges(value: InputEdge<E>[]) {
     this._inputEdges = value;
     this._onEdgeChanges$.next();
   }
-  _inputEdges: InputEdge<T>[] = [];
+  _inputEdges: InputEdge<E>[] = [];
 
-  static ngTemplateContextGuard<T>(
-    _dir: EdgeTemplateDirective<T>,
+  static ngTemplateContextGuard<E>(
+    _dir: EdgeTemplateDirective<E>,
     _ctx: unknown,
-  ): _ctx is EdgeTemplateContext<T> {
+  ): _ctx is EdgeTemplateContext<E> {
     return true;
   }
 

@@ -33,7 +33,7 @@ import { ViewBox } from './models/view-box.model';
   styleUrls: ['./graphy.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GraphyComponent<NData, EData> implements AfterViewInit, OnDestroy {
+export class GraphyComponent<N, E> implements AfterViewInit, OnDestroy {
   /**
    * The D3 curve used for defining the shape of edges (from `'d3-shape'` library). Available
    * options can be found at: https://github.com/d3/d3-shape/blob/main/README.md#curves.
@@ -99,10 +99,10 @@ export class GraphyComponent<NData, EData> implements AfterViewInit, OnDestroy {
   @Output() readonly onPan: EventEmitter<void> = new EventEmitter();
 
   /** The array of nodes to display, along with additional layout information. */
-  transformedNodes: TransformedNode<NData>[] = [];
+  transformedNodes: TransformedNode<N>[] = [];
 
   /** The array of edges to display, along with additional layout information. */
-  transformedEdges: TransformedEdge<EData>[] = [];
+  transformedEdges: TransformedEdge<E>[] = [];
 
   /** Subject that emits when the component has been destroyed. */
   private readonly _onDestroy$: Subject<void> = new Subject();
@@ -124,10 +124,10 @@ export class GraphyComponent<NData, EData> implements AfterViewInit, OnDestroy {
   @ContentChild(DefsTemplateDirective) readonly _defsTemplate: DefsTemplateDirective;
 
   /** The structural directive that holds the template for edges. */
-  @ContentChild(EdgeTemplateDirective) readonly _edgeTemplate: EdgeTemplateDirective<EData>;
+  @ContentChild(EdgeTemplateDirective) readonly _edgeTemplate: EdgeTemplateDirective<E>;
 
   /** The structural directive that holds the template for nodes. */
-  @ContentChild(NodeTemplateDirective) readonly _nodeTemplate: NodeTemplateDirective<NData>;
+  @ContentChild(NodeTemplateDirective) readonly _nodeTemplate: NodeTemplateDirective<N>;
 
   /** Reference to the SVG container element. */
   @ViewChild('graphContainer') private readonly _graphContainer: ElementRef<SVGSVGElement>;
@@ -144,12 +144,12 @@ export class GraphyComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
 
   /** The array of nodes to display in the graph. */
-  private get _inputNodes(): InputNode<NData>[] {
+  private get _inputNodes(): InputNode<N>[] {
     return this._nodeTemplate.inputNodes;
   }
 
   /** The array of edges to display in the graph. */
-  private get _inputEdges(): InputEdge<EData>[] {
+  private get _inputEdges(): InputEdge<E>[] {
     return this._edgeTemplate.inputEdges;
   }
 
@@ -214,7 +214,7 @@ export class GraphyComponent<NData, EData> implements AfterViewInit, OnDestroy {
     const { edges, nodes } = dagre.graphlib.json.write(graph);
 
     this.transformedNodes = nodes.map((node: GraphOutputNode) => {
-      const inputNode: InputNode<NData> = this._getInputNode(node.v);
+      const inputNode: InputNode<N> = this._getInputNode(node.v);
       const { width, height, x, y } = node.value;
 
       return {
@@ -232,7 +232,7 @@ export class GraphyComponent<NData, EData> implements AfterViewInit, OnDestroy {
     });
 
     this.transformedEdges = edges.map((edge: GraphOutputEdge) => {
-      const inputEdge: InputEdge<EData> = this._getInputEdge(edge.v, edge.w);
+      const inputEdge: InputEdge<E> = this._getInputEdge(edge.v, edge.w);
 
       return {
         id: inputEdge.id,
@@ -307,7 +307,7 @@ export class GraphyComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
 
   /** Tracking function for nodes and edges. */
-  _trackById(_index: number, object: TransformedNode<NData> | TransformedEdge<EData>): string {
+  _trackById(_index: number, object: TransformedNode<N> | TransformedEdge<E>): string {
     return object.id;
   }
 
@@ -362,12 +362,12 @@ export class GraphyComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
 
   /** Get an input node by its ID. */
-  private _getInputNode(id: string): InputNode<NData> {
+  private _getInputNode(id: string): InputNode<N> {
     return this._inputNodes.find((node) => node.id === id);
   }
 
   /** Get an input edge by its source ID and target ID. */
-  private _getInputEdge(sourceId: string, targetId: string): InputEdge<EData> {
+  private _getInputEdge(sourceId: string, targetId: string): InputEdge<E> {
     return this._inputEdges.find(
       (edge) => edge.sourceId === sourceId && edge.targetId === targetId,
     );

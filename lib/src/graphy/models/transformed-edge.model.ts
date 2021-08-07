@@ -1,4 +1,4 @@
-export interface TransformedEdge<T = {}> {
+export interface TransformedEdge<E = {}> {
   /** The unique identifier of the edge. */
   id?: string;
 
@@ -12,5 +12,5 @@ export interface TransformedEdge<T = {}> {
   pathDefinition: string;
 
   /** The data associated with an edge. */
-  data: T;
+  data: E;
 }

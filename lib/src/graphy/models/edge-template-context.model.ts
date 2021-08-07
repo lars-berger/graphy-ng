@@ -1,8 +1,8 @@
 import { TransformedEdge } from './transformed-edge.model';
 
-export type EdgeContext<T> = TransformedEdge<T>;
+export type EdgeContext<E> = TransformedEdge<E>;
 
 /** The context object passed to edge templates. */
-export interface EdgeTemplateContext<T> {
-  $implicit: EdgeContext<T>;
+export interface EdgeTemplateContext<E> {
+  $implicit: EdgeContext<E>;
 }
