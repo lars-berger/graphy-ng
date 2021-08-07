@@ -24,21 +24,21 @@ $ yarn add graphy-ng
 
 ## Basic usage
 
-Import `GraphModule` into your feature module.
+Import `GraphyModule` into your feature module.
 
 ```ts title="family-tree.module.ts"
 @NgModule({
-  imports: [GraphModule],
+  imports: [GraphyModule],
   declarations: [FamilyTreeComponent],
 })
 export class FamilyTreeModule {}
 ```
 
-Consume `lib-graph` in your component, passing `edges` and `nodes` as input.
+Consume `graphy-ng` in your component, passing `edges` and `nodes` as input.
 
 ```html title="family-tree.component.html"
 <p>Here's my pretty graph:</p>
-<lib-graph>
+<graphy-ng>
   <ng-container *defsTemplate>
     <svg:marker
       id="arrow"
@@ -61,7 +61,7 @@ Consume `lib-graph` in your component, passing `edges` and `nodes` as input.
   <ng-container *edgeTemplate="let edge; edges: edges">
     <svg:path marker-end="url(#arrow)" [attr.d]="edge.pathDefinition"></svg:path>
   </ng-container>
-</lib-graph>
+</graphy-ng>
 ```
 
 ```ts title="family-tree.component.ts"

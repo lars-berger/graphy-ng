@@ -6,7 +6,7 @@ sidebar_position: 1
 
 ## Inputs
 
-Inputs that can be passed to the `lib-graph` component:
+Inputs that can be passed to the `graphy-ng` component:
 
 | Name                | Type                   | Default                        | Description                                                                                                                                                                      |
 | ------------------- | ---------------------- | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -24,7 +24,7 @@ Inputs that can be passed to the `lib-graph` component:
 
 ## Outputs
 
-Outputs emitted by the `lib-graph` component:
+Outputs emitted by the `graphy-ng` component:
 
 | Name     | Type   | Description                                     |
 | -------- | ------ | ----------------------------------------------- |

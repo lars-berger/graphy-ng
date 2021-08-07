@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Graph methods
 
-Methods that can be called on the `lib-graph` component, eg. through the use of `@ViewChild(GraphComponent)`:
+Methods that can be called on the `graphy-ng` component, eg. through the use of `@ViewChild(GraphyComponent)`:
 
 - #### `pan(deltaX: number, deltaY: number): void`
 
