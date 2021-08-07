@@ -4,6 +4,8 @@ sidebar_position: 2
 
 # Configuration
 
+[//]: # 'TODO: Consider renaming to `API reference.`'
+
 ## Custom templates
 
 `graphy-ng` allows for custom templates for nodes, edges, and SVG defs to allow for complete customization of the appearance and behavior of your graph.
@@ -37,6 +39,14 @@ The defs template can be used to define SVG objects that will be consumed by the
 </ng-container>
 ```
 
+#### Edge template inputs
+
+Inputs that can be passed to the `*edgeTemplate` structural directive.
+
+| Name  | Type           | Description                                 |
+| ----- | -------------- | ------------------------------------------- |
+| edges | `InputEdge<E>` | The array of edges to display in the graph. |
+
 #### Edge template context
 
 Properties defined on the `edge` template variable.
@@ -56,6 +66,14 @@ Properties defined on the `edge` template variable.
   <svg:circle r="10" cx="5" cy="5" />
 </ng-container>
 ```
+
+#### Node template inputs
+
+Inputs that can be passed to the `*nodeTemplate` structural directive.
+
+| Name  | Type           | Description                                 |
+| ----- | -------------- | ------------------------------------------- |
+| nodes | `InputNode<N>` | The array of nodes to display in the graph. |
 
 #### Node template context
 
