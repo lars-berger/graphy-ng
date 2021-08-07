@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { GraphComponent } from './graph.component';
+import { GraphyComponent } from './graphy.component';
 import { DefsTemplateDirective, EdgeTemplateDirective, NodeTemplateDirective } from './templates';
 
 @NgModule({
   declarations: [
     DefsTemplateDirective,
     EdgeTemplateDirective,
-    GraphComponent,
+    GraphyComponent,
     NodeTemplateDirective,
   ],
   imports: [CommonModule],
-  exports: [DefsTemplateDirective, EdgeTemplateDirective, GraphComponent, NodeTemplateDirective],
+  exports: [DefsTemplateDirective, EdgeTemplateDirective, GraphyComponent, NodeTemplateDirective],
 })
-export class GraphModule {}
+export class GraphyModule {}

@@ -29,11 +29,11 @@ import { ViewBox } from './models/view-box.model';
 
 @Component({
   selector: 'lib-graph',
-  templateUrl: './graph.component.html',
-  styleUrls: ['./graph.component.scss'],
+  templateUrl: './graphy.component.html',
+  styleUrls: ['./graphy.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
+export class GraphyComponent<NData, EData> implements AfterViewInit, OnDestroy {
   /**
    * The D3 curve used for defining the shape of edges (from `'d3-shape'` library). Available
    * options can be found at: https://github.com/d3/d3-shape/blob/main/README.md#curves.

@@ -2,15 +2,15 @@
  * Public API surface.
  */
 
-export { GraphModule } from './graph/graph.module';
-export { GraphComponent } from './graph/graph.component';
+export { GraphyModule } from './graphy/graphy.module';
+export { GraphyComponent } from './graphy/graphy.component';
 export {
   DefsTemplateDirective,
   EdgeTemplateDirective,
   NodeTemplateDirective,
-} from './graph/templates';
-export { InputEdge } from './graph/models/input-edge.model';
-export { InputNode } from './graph/models/input-node.model';
-export { TransformedEdge } from './graph/models/transformed-edge.model';
-export { TransformedNode } from './graph/models/transformed-node.model';
-export { ViewBox } from './graph/models/view-box.model';
+} from './graphy/templates';
+export { InputEdge } from './graphy/models/input-edge.model';
+export { InputNode } from './graphy/models/input-node.model';
+export { TransformedEdge } from './graphy/models/transformed-edge.model';
+export { TransformedNode } from './graphy/models/transformed-node.model';
+export { ViewBox } from './graphy/models/view-box.model';

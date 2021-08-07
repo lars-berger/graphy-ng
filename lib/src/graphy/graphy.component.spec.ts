@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GraphComponent } from './graph.component';
+import { GraphComponent } from './graphy.component';
 
 describe('GraphComponent', () => {
   let component: GraphComponent;
