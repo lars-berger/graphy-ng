@@ -83,3 +83,33 @@ Properties defined on the `node` template variable of type `NodeContext<N>`.
 | ---- | -------- | ---------------------------------- |
 | id   | `string` | The unique identifier of the node. |
 | data | `<N>`    | The data associated with a node.   |
+
+## Graph inputs & outputs
+
+### Inputs
+
+Inputs that can be passed to the `lib-graph` component.
+
+| Name                | Type             | Description                                                                                                                                                      |
+| ------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| curve               | `d3.curve`       | The `d3.curve` used for defining the shape of edges.                                                                                                             |
+| enableZooming       | `boolean`        | Whether to enable zooming.                                                                                                                                       |
+| enablePanning       | `boolean`        | Whether to enable panning.                                                                                                                                       |
+| zoomSpeed           | `number`         | The speed of zooming in/out, if zoom is enabled.                                                                                                                 |
+| invertZoomDirection | `boolean`        | Whether to reverse the zoom direction, if zoom is enabled.                                                                                                       |
+| centerOnChanges     | `boolean`        | Whether to center the graph on any input changes.                                                                                                                |
+| direction           | `GraphDirection` | The direction of the graph layout. For example, using `GraphOrientation.LEFT_TO_RIGHT` in an acyclic graph will cause edges to point from the left to the right. |
+| marginX             | `number`         | Number of pixels to use as a margin around the left and right of the graph.                                                                                      |
+| marginY             | `number`         | Number of pixels to use as a margin around the top and bottom of the graph.                                                                                      |
+| width               | `string`         | The width of the graph (eg. `'600px'`).                                                                                                                          |
+| height              | `string`         | The height of the graph (eg. `'600px'`).                                                                                                                         |
+
+### Outputs
+
+Outputs emitted by the `lib-graph` component.
+
+| Name     | Type   | Description                                     |
+| -------- | ------ | ----------------------------------------------- |
+| onCenter | `void` | Event emitted when centering the graph.         |
+| onZoom   | `void` | Event emitted when zooming in/out of the graph. |
+| onPan    | `void` | Event emitted when the graph is being panned.   |
