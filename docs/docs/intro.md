@@ -40,7 +40,6 @@ Consume `lib-graph` in your component, passing `edges` and `nodes` as input.
 <lib-graph>
   <ng-container *defsTemplate>
     <svg:marker
-      class="arrow"
       id="arrow"
       viewBox="0 -5 10 10"
       refX="8"
@@ -54,11 +53,12 @@ Consume `lib-graph` in your component, passing `edges` and `nodes` as input.
   </ng-container>
 
   <ng-container *nodeTemplate="let node; nodes: nodes">
-    <svg:circle r="10" cx="5" cy="5" />
+    <svg:circle cx="25" cy="25" r="25" />
+    <svg:text fill="blue" transform="translate(0 30)">{{ node.data.name }}</svg:text>
   </ng-container>
 
   <ng-container *edgeTemplate="let edge; edges: edges">
-    <svg:path class="line" marker-end="url(#arrow)" [attr.d]="edge.pathDefinition"></svg:path>
+    <svg:path marker-end="url(#arrow)" [attr.d]="edge.pathDefinition"></svg:path>
   </ng-container>
 </lib-graph>
 ```
@@ -70,9 +70,12 @@ Consume `lib-graph` in your component, passing `edges` and `nodes` as input.
   styleUrls: ['./hello.component.css'],
 })
 export class HelloComponent {
-  nodes = [{ id: '1' }, { id: '2' }];
+  nodes: InputNode<{ name: string }>[] = [
+    { id: '1', data: { name: 'Jeremy' } },
+    { id: '2', data: { name: 'Robin' } },
+  ];
 
-  edges = [
+  edges: InputEdge[] = [
     {
       sourceId: '1',
       targetId: '2',

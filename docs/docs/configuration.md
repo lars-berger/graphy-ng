@@ -17,7 +17,6 @@ The defs template can be used to define SVG objects that will be consumed by the
 ```html
 <ng-container *defsTemplate>
   <svg:marker
-    class="arrow"
     id="arrow"
     viewBox="0 -5 10 10"
     refX="8"
@@ -35,7 +34,7 @@ The defs template can be used to define SVG objects that will be consumed by the
 
 ```html
 <ng-container *edgeTemplate="let edge; edges: edges">
-  <svg:path class="line" marker-end="url(#arrow)" [attr.d]="edge.pathDefinition"></svg:path>
+  <svg:path marker-end="url(#arrow)" [attr.d]="edge.pathDefinition"></svg:path>
 </ng-container>
 ```
 
@@ -63,7 +62,8 @@ Properties defined on the `edge` template variable.
 
 ```html
 <ng-container *nodeTemplate="let node; nodes: nodes">
-  <svg:circle r="10" cx="5" cy="5" />
+  <svg:circle cx="25" cy="25" r="25" />
+  <svg:text fill="blue" transform="translate(0 30)">{{ node.data.name }}</svg:text>
 </ng-container>
 ```
 
