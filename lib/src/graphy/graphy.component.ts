@@ -28,7 +28,7 @@ import { TransformedNode } from './models/transformed-node.model';
 import { ViewBox } from './models/view-box.model';
 
 @Component({
-  selector: 'lib-graph',
+  selector: 'graphy-ng',
   templateUrl: './graphy.component.html',
   styleUrls: ['./graphy.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
