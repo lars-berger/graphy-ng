@@ -9,6 +9,8 @@ export {
   EdgeTemplateDirective,
   NodeTemplateDirective,
 } from './graphy/templates';
+export { EdgeContext } from './graphy/models/edge-template-context.model';
+export { NodeContext } from './graphy/models/node-template-context.model';
 export { InputEdge } from './graphy/models/input-edge.model';
 export { InputNode } from './graphy/models/input-node.model';
 export { TransformedEdge } from './graphy/models/transformed-edge.model';
