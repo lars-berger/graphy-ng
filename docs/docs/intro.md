@@ -26,16 +26,17 @@ $ yarn add graphy-ng
 
 Import `GraphModule` into your feature module.
 
-```ts title="hello.module.ts"
+```ts title="family-tree.module.ts"
 @NgModule({
   imports: [GraphModule],
+  declarations: [FamilyTreeComponent],
 })
-export class HelloModule {}
+export class FamilyTreeModule {}
 ```
 
 Consume `lib-graph` in your component, passing `edges` and `nodes` as input.
 
-```html title="hello.component.html"
+```html title="family-tree.component.html"
 <p>Here's my pretty graph:</p>
 <lib-graph>
   <ng-container *defsTemplate>
@@ -63,22 +64,25 @@ Consume `lib-graph` in your component, passing `edges` and `nodes` as input.
 </lib-graph>
 ```
 
-```ts title="hello.component.ts"
+```ts title="family-tree.component.ts"
 @Component({
-  selector: 'app-hello',
-  templateUrl: './hello.component.html',
-  styleUrls: ['./hello.component.css'],
+  ...
 })
-export class HelloComponent {
+export class FamilyTreeComponent {
   nodes: InputNode<{ name: string }>[] = [
-    { id: '1', data: { name: 'Jeremy' } },
+    { id: '1', data: { name: 'Carl' } },
     { id: '2', data: { name: 'Robin' } },
+    { id: '3', data: { name: 'Jeremy' } },
   ];
 
   edges: InputEdge[] = [
     {
       sourceId: '1',
-      targetId: '2',
+      targetId: '3',
+    },
+    {
+      sourceId: '2',
+      targetId: '3',
     },
   ];
 }
