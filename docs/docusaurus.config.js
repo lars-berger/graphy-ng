@@ -23,7 +23,7 @@ module.exports = {
           type: 'doc',
           docId: 'intro',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Docs',
         },
         {
           href: 'https://github.com/lars-berger/graphy-ng',
