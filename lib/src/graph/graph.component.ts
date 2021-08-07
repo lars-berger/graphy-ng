@@ -34,7 +34,10 @@ import { ViewBox } from './models/view-box.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
-  /** The d3.curve used for defining the shape of edges. */
+  /**
+   * The D3 curve used for defining the shape of edges (from `'d3-shape'` library). Available
+   * options can be found at: https://github.com/d3/d3-shape/blob/main/README.md#curves.
+   */
   @Input() curve: CurveFactory = curveBasis;
 
   /** Whether to enable zooming. */
@@ -43,13 +46,13 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   /** Whether to enable panning. */
   @Input() enablePanning: boolean = true;
 
-  /** The speed of zooming in/out, if enabled. */
+  /** The speed of zooming in/out, if zoom is enabled. */
   @Input() zoomSpeed: number = 0.1;
 
-  /** Whether to reverse the zoom direction. */
+  /** Whether to reverse the zoom direction, if zoom is enabled. */
   @Input() invertZoomDirection: boolean = false;
 
-  /** Whether to center the graph on any input changes. */
+  /** Whether to center the graph on any input changes to nodes or edges. */
   @Input() centerOnChanges: boolean = false;
 
   /**
@@ -64,7 +67,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   /** Number of pixels to use as a margin around the top and bottom of the graph. */
   @Input() marginY: number = 0;
 
-  /** The width of the graph (eg. '600px'). */
+  /** The width of the graph (eg. `'600px'`). */
   @Input()
   get width(): string {
     return this._width;
@@ -75,7 +78,7 @@ export class GraphComponent<NData, EData> implements AfterViewInit, OnDestroy {
   }
   _width: string = '100%';
 
-  /** The height of the graph (eg. '600px'). */
+  /** The height of the graph (eg. `'600px'`). */
   @Input()
   get height(): string {
     return this._height;
