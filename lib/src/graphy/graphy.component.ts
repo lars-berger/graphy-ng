@@ -98,6 +98,9 @@ export class GraphyComponent<N, E> implements AfterViewInit, OnDestroy {
   /** Event emitted when the graph is being panned. */
   @Output() readonly onPan: EventEmitter<void> = new EventEmitter();
 
+  /** Event emitted when graph is initially rendered and on any subsequent re-renders. */
+  @Output() readonly onRender: EventEmitter<void> = new EventEmitter();
+
   /** The array of nodes to display, along with additional layout information. */
   transformedNodes: TransformedNode<N>[] = [];
 
@@ -245,6 +248,7 @@ export class GraphyComponent<N, E> implements AfterViewInit, OnDestroy {
       };
     });
 
+    this.onRender.emit();
     this.cd.detectChanges();
   }
 
