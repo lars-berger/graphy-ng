@@ -173,8 +173,6 @@ export class GraphyComponent<N, E> implements AfterViewInit, OnDestroy {
 
     this._resetViewBoxDimensions();
 
-    this.renderGraph();
-
     if (this.enableZooming) {
       this._registerZoomListener();
     }
@@ -183,10 +181,11 @@ export class GraphyComponent<N, E> implements AfterViewInit, OnDestroy {
       this._registerPanningListener();
     }
 
-    // TODO: Add a subject for when graph is initially rendered or re-rendered.
     if (this.centerOnChanges) {
-      this.center();
+      this._registerCenterListener();
     }
+
+    this.renderGraph();
 
     const inputChanges$: Observable<void> = merge(
       this._edgeTemplate._onEdgeChanges$,
@@ -194,13 +193,7 @@ export class GraphyComponent<N, E> implements AfterViewInit, OnDestroy {
     );
 
     // Re-render the graph on any changes to nodes or edges.
-    inputChanges$.subscribe(() => {
-      this.renderGraph();
-
-      if (this.centerOnChanges) {
-        this.center();
-      }
-    });
+    inputChanges$.subscribe(() => this.renderGraph());
   }
 
   ngOnDestroy(): void {
@@ -248,8 +241,8 @@ export class GraphyComponent<N, E> implements AfterViewInit, OnDestroy {
       };
     });
 
-    this.onRender.emit();
     this.cd.detectChanges();
+    this.onRender.emit();
   }
 
   /** Pan horizontally and vertically by given pixel deltas. */
@@ -306,8 +299,8 @@ export class GraphyComponent<N, E> implements AfterViewInit, OnDestroy {
 
     this.panToCoordinates(centerX - viewBoxCenterX, centerY - viewBoxCenterY);
 
-    this.onCenter.emit();
     this.cd.detectChanges();
+    this.onCenter.emit();
   }
 
   /** Tracking function for nodes and edges. */
@@ -491,5 +484,10 @@ export class GraphyComponent<N, E> implements AfterViewInit, OnDestroy {
     // Convert a screen coordinate to an SVG coordinate.
     const invertedSVGMatrix: DOMMatrix = svg.getScreenCTM().inverse();
     return point.matrixTransform(invertedSVGMatrix);
+  }
+
+  /** Listen for when graph is rendered/re-rendered and center the graph. */
+  private _registerCenterListener(): void {
+    this.onRender.pipe(takeUntil(this._onDestroy$)).subscribe(() => this.center());
   }
 }
