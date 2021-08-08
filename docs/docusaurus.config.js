@@ -5,10 +5,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 module.exports = {
   title: 'graphy-ng',
   tagline: 'Directed graph renderer for Angular',
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  url: 'https://lars-berger.github.io',
+  baseUrl: '/graphy-ng/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
+  trailingSlash: false,
   favicon: 'img/favicon.ico',
   organizationName: 'lars-berger', // Usually your GitHub org/user name.
   projectName: 'graphy-ng', // Usually your repo name.
