@@ -2,7 +2,7 @@
   "name": "@graphy-ng/monorepo",
   "version": "0.0.0",
   "private": true,
-  "licence": "MIT",
+  "license": "MIT",
   "workspaces": {
     "packages": [
       "example",

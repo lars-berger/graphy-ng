@@ -2,7 +2,7 @@
   "name": "@graphy-ng/docs",
   "version": "0.0.0",
   "private": true,
-  "licence": "MIT",
+  "license": "MIT",
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",

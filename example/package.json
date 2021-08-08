@@ -2,7 +2,7 @@
   "name": "@graphy-ng/example",
   "version": "0.0.0",
   "private": true,
-  "licence": "MIT",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
