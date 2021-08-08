@@ -1,4 +1,4 @@
-export interface TransformedNode<N = {}> {
+export interface TransformedNode<N = void> {
   /** The unique identifier of the node. */
   id: string;
 

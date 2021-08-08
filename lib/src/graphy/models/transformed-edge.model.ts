@@ -1,4 +1,4 @@
-export interface TransformedEdge<E = {}> {
+export interface TransformedEdge<E = void> {
   /** The unique identifier of the edge. */
   id?: string;
 
