@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_graphy_ng_docs=self.webpackChunk_graphy_ng_docs||[]).push([[955],{8571:function(a){a.exports=JSON.parse('{"allTagsPath":"/graphy-ng/blog/tags","slug":"hola","name":"hola","count":1,"permalink":"/graphy-ng/blog/tags/hola"}')}}]);

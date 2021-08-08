@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_graphy_ng_docs=self.webpackChunk_graphy_ng_docs||[]).push([[394],{3585:function(s){s.exports=JSON.parse('{"allTagsPath":"/graphy-ng/blog/tags","slug":"docusaurus","name":"docusaurus","count":3,"permalink":"/graphy-ng/blog/tags/docusaurus"}')}}]);

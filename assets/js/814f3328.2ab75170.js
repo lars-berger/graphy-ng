@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_graphy_ng_docs=self.webpackChunk_graphy_ng_docs||[]).push([[535],{6353:function(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Welcome","permalink":"/graphy-ng/blog/welcome"},{"title":"Hello","permalink":"/graphy-ng/blog/hello-world"},{"title":"Hola","permalink":"/graphy-ng/blog/hola"}]}')}}]);
