@@ -22,7 +22,8 @@
     "clean": "rimraf dist",
     "build": "ng-packagr -p ng-package.json --config ./tsconfig.json",
     "watch": "ng-packagr -p ng-package.json --config ./tsconfig.json --watch true",
-    "start": "npm run clean && npm run watch"
+    "start": "npm run clean && npm run watch",
+    "prepublishOnly": "cp ../README.md README.md && npm run build"
   },
   "dependencies": {
     "d3-shape": "3.0.1",
