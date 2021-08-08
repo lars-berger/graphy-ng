@@ -1,14 +1,15 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/lars-berger/graphy-ng/LICENSE.md)
 [![npm version](https://img.shields.io/npm/v/graphy-ng.svg?style=flat)](https://www.npmjs.com/package/graphy-ng)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://reactjs.org/docs/how-to-contribute.html#your-first-pull-request)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/lars-berger/graphy-ng/pulls)
 ======
 
-
-![graphy-ng logo](docs/static/img/logo.svg)
+[![graphy-ng logo](logo.png)](https://lars-berger.github.io/graphy-ng)
 
 `graphy-ng` is a library for rendering directed graphs in Angular. Under the hood, [Dagre](https://github.com/dagrejs/dagre) is used as a layout engine and the graph is drawn using SVGs.
 
 **The library is compiled with Ivy and requires Angular 12+**
+
+[⚡ Interactive example](https://stackblitz.com/github/lars-berger/graphy-ng/tree/main/example)  [📚 Documentation](https://lars-berger.github.io/graphy-ng)
 
 ## Installation
 
@@ -28,17 +29,21 @@ $ yarn add graphy-ng @types/d3-shape
 
 Import `GraphyModule` into your feature module.
 
-```ts title="family-tree.module.ts"
+`family-tree.module.ts`
+
+```ts
 @NgModule({
   imports: [GraphyModule],
-  declarations: [FamilyTreeComponent],
+  ...
 })
 export class FamilyTreeModule {}
 ```
 
 Consume `graphy-ng` in your component, providing templates for how nodes and edges should be rendered.
 
-```html title="family-tree.component.html"
+`family-tree.component.html`
+
+```html
 <p>Here's my pretty graph:</p>
 <graphy-ng>
   <ng-container *defsTemplate>
@@ -66,7 +71,9 @@ Consume `graphy-ng` in your component, providing templates for how nodes and edg
 </graphy-ng>
 ```
 
-```ts title="family-tree.component.ts"
+`family-tree.component.ts`
+
+```ts
 @Component({
   ...
 })
