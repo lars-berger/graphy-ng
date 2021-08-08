@@ -1,6 +1,7 @@
 {
   "name": "graphy-ng",
   "version": "1.0.2",
+  "licence": "MIT",
   "main": "dist/out-tsc/esm2015/public-api.js",
   "typings": "dist/out-tsc/public-api.d.ts",
   "scripts": {
