@@ -23,7 +23,11 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictBindCallApply": true,
-    "allowUnreachableCode": false
+    "allowUnreachableCode": false,
+    "paths": {
+      "rxjs": ["../node_modules/rxjs"],
+      "rxjs/*": ["../node_modules/rxjs/*"]
+    }
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
