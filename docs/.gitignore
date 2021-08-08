@@ -1,0 +1,6 @@
+# Compiled output
+**/build
+
+# Generated files
+**/.docusaurus
+**/.cache-loader
