@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Introduction
 
-`graphy-ng` is a renderer for directed graphs in Angular. Under the hood, [Dagre](https://github.com/dagrejs/dagre) is used as a layout engine and the graph is rendered using SVGs.
+`graphy-ng` is a library for rendering directed graphs in Angular. Under the hood, [Dagre](https://github.com/dagrejs/dagre) is used as a layout engine and the graph is drawn using SVGs.
 
 **The library is compiled with Ivy and requires Angular 12+**
 
@@ -13,13 +13,13 @@ sidebar_position: 1
 Using npm:
 
 ```
-$ npm i graphy-ng
+$ npm i graphy-ng && npm i -D @types/d3-shape
 ```
 
 Using yarn:
 
 ```
-$ yarn add graphy-ng
+$ yarn add graphy-ng && yarn add -D @types/d3-shape
 ```
 
 ## Basic usage
@@ -29,12 +29,12 @@ Import `GraphyModule` into your feature module.
 ```ts title="family-tree.module.ts"
 @NgModule({
   imports: [GraphyModule],
-  declarations: [FamilyTreeComponent],
+  ...
 })
 export class FamilyTreeModule {}
 ```
 
-Consume `graphy-ng` in your component, passing `edges` and `nodes` as input.
+Consume `graphy-ng` in your component, providing templates for how nodes and edges should be rendered.
 
 ```html title="family-tree.component.html"
 <p>Here's my pretty graph:</p>
@@ -76,25 +76,17 @@ export class FamilyTreeComponent {
   ];
 
   edges: InputEdge[] = [
-    {
-      sourceId: '1',
-      targetId: '3',
-    },
-    {
-      sourceId: '2',
-      targetId: '3',
-    },
+    { sourceId: '1', targetId: '3', },
+    { sourceId: '2', targetId: '3', },
   ];
 }
 ```
 
-## Comparison vs. ngx-graph
+## Comparison vs. [ngx-graph](https://github.com/swimlane/ngx-graph)
 
 **Pros:**
 
-[//]: # 'TODO: Get exact % decrease.'
-
-- Significantly more light-weight. About a `200kb`/`2mb` decrease in production/development bundle sizes respectively (about a **XX% overall decrease** in a fresh Angular app).
+- Significantly more lightweight. Production bundle size of a fresh Angular app decreased from `490kb` to `255kb` by switching libraries (**36% overall decrease** in app size).
 - Input nodes and edges are not modified by the library.
 - Avoids requiring certain CSS classes to be hard-coded when using custom templates.
 - Full TypeScript support when using custom templates.
@@ -102,3 +94,7 @@ export class FamilyTreeComponent {
 **Cons:**
 
 - Lacks more advanced and niche features — namely clusters, custom/force-directed layouts, and graph minimaps.
+
+## License
+
+`graphy-ng` is licensed under the terms of the [MIT License](https://github.com/lars-berger/graphy-ng/blob/main/LICENSE.md).
