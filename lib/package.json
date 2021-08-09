@@ -1,6 +1,6 @@
 {
   "name": "graphy-ng",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "description": "Library for rendering directed graphs in Angular.",
   "repository": "github:lars-berger/graphy-ng",
