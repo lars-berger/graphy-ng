@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_graphy_ng_docs=self.webpackChunk_graphy_ng_docs||[]).push([[195],{8598:function(n,e,r){r.r(e),r.d(e,{default:function(){return u}});var t=r(7378),c=r(9635);function u(){return t.createElement(c.l_,{to:"/graphy-ng/docs/intro"})}}}]);
