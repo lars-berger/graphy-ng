@@ -9,20 +9,28 @@
 
 **The library is compiled with Ivy and requires Angular 12+**
 
-[⚡ Interactive example](https://stackblitz.com/github/lars-berger/graphy-ng/tree/main/example)  [📚 Documentation](https://lars-berger.github.io/graphy-ng)
+[📚 Documentation](https://lars-berger.github.io/graphy-ng)
+
+## Interactive example
+
+A simple interactive demo can be found on StackBlitz. It showcases how nodes and edges can be added dynamically and some features like making use of custom templates, re-rendering on create/update, and navigating the graph through panning or zooming.
+
+[⚡ StackBlitz link](https://stackblitz.com/github/lars-berger/graphy-ng/tree/main/example)
+
+![demo-recording](https://user-images.githubusercontent.com/34844898/128693533-a807ccfc-4d89-4e08-9f58-aca92b3cf0d8.gif)
 
 ## Installation
 
 Using npm:
 
 ```
-$ npm i graphy-ng @types/d3-shape
+$ npm i graphy-ng && npm i -D @types/d3-shape
 ```
 
 Using yarn:
 
 ```
-$ yarn add graphy-ng @types/d3-shape
+$ yarn add graphy-ng && yarn add -D @types/d3-shape
 ```
 
 ## Basic usage
