@@ -103,7 +103,7 @@ export class FamilyTreeComponent {
 
 **Pros:**
 
-- Significantly more lightweight. Production bundle size of a fresh Angular app decreased from `490kb` to `255kb` by switching libraries (**36% overall decrease** in app size).
+- Significantly more lightweight. Production bundle size of a fresh Angular app decreased from `490kb` to `255kb` by switching libraries (**47% overall decrease** in app size).
 - Input nodes and edges are not modified by the library.
 - Avoids requiring certain CSS classes to be hard-coded when using custom templates.
 - Full TypeScript support when using custom templates.
